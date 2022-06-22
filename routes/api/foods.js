@@ -1,6 +1,10 @@
 const express = require('express');
 const fs = require('fs');
 
+const {
+    WebhookClient
+} = require('dialogflow-fulfillment');
+
 const router = express.Router();
 
 let foods = JSON.parse(fs.readFileSync('foods.json'));
@@ -46,7 +50,7 @@ router.put('/:name', function (req, res) {
     if (found) {
         const updateFood = req.body;
         foods.forEach(food => {
-            if(food.name === req.params.name) {
+            if (food.name === req.params.name) {
                 food.name = updateFood.name ? updateFood.name : food.name;
                 food.eng_name = updateFood.eng_name ? updateFood.eng_name : food.eng_name;
                 food.rice = updateFood.rice ? updateFood.rice : food.rice;
@@ -59,7 +63,7 @@ router.put('/:name', function (req, res) {
                 food.avg_calories = updateFood.avg_calories ? updateFood.avg_calories : food.avg_calories;
                 food.cuisine = updateFood.cuisine ? updateFood.cuisine : food.cuisine;
 
-                res.json({ msg: 'Food updated', food});
+                res.json({ msg: 'Food updated', food });
             }
         })
     }
@@ -79,6 +83,29 @@ router.delete('/:name', function (req, res) {
     else {
         res.status(400).json({ msg: `No food with name ${req.params.name}` })
     }
+});
+
+router.post('/dialogflow-fulfillment', function(req, res) {
+    const agent = new WebhookClient({
+        request: req,
+        response: res
+    });
+
+
+    function recommendFromCategory(agent) {
+        agent.add(`กิน${agent.parameters['category']}กันเถอะ`);
+    }
+
+    function recommend(agent) {
+        var keys = Object.keys(foods);
+        var food = foods[keys[keys.length * Math.random() << 0]];
+        agent.add(`${food}`);
+    }
+
+    let intentMap = new Map();
+    intentMap.set('Recommend - custom - yes', recommendFromCategory);
+    intentMap.set('Recommend - no', recommend);
+    agent.handleRequest(intentMap);
 });
 
 module.exports = router;
