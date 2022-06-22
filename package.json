@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node racommend",
+    "start": "node recommend",
     "dev": "nodemon recommend"
   },
   "keywords": [],
