@@ -99,7 +99,8 @@ router.post('/dialogflow-fulfillment', function(req, res) {
     function recommend(agent) {
         var keys = Object.keys(foods);
         var food = foods[keys[keys.length * Math.random() << 0]];
-        agent.add(`${food}`);
+        agent.add('งั้นกินไอ้นี่แล้วกันนะ');
+        agent.add(food);
     }
 
     let intentMap = new Map();
