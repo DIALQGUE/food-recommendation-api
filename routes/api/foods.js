@@ -105,8 +105,8 @@ router.post('/dialogflow-fulfillment', function(req, res) {
     }
 
     let intentMap = new Map();
-    intentMap.set('Recommend - custom - yes', recommendFromCategory);
-    intentMap.set('Recommend - no', recommend);
+    intentMap.set('Recommend - condition - yes', recommendFromCategory);
+    intentMap.set('Recommend - no condition', recommend);
     agent.handleRequest(intentMap);
 });
 

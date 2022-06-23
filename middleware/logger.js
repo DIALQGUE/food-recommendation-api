@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 const logger = function (req, res, next) {
-    console.log(`${moment().format()}`);
+    console.log(`\n${moment().format()}`);
     next();
 }
 
