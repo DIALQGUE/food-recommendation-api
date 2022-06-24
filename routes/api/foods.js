@@ -27,27 +27,19 @@ router.get('/:name', function (req, res) {
     });
 });
 
-// router.post('/', function (req, res) {
-//     const newFood = {
-//         name: req.body.name,
-//         eng_name: req.body.eng_name,
-//         rice: req.body.rice,
-//         meat: req.body.meat,
-//         spicy: req.body.spicy,
-//         seafood: req.body.seafood,
-//         green_level: req.body.green_level,
-//         contain_nut: req.body.contain_nut,
-//         contain_milk: req.body.contain_milk,
-//         avg_calories: req.body.avg_calories,
-//         cuisine: req.body.cuisine
-//     }
-//     if (!newFood.name) {
-//         return res.status(400).json({ msg: 'Please include a name' });
-//     }
-//     foods.push(newFood);
-//     // fs.writeFileSync('./foods.json', JSON.stringify(foods, null, 2));
-//     res.send(foods);
-// })
+router.post('/', function (req, res) {
+    const food = req.body;
+    let newFood = new Foods({
+        name: food.name,
+        eng_name: food.eng_name,
+        tag: food.tag
+    });
+    if (!newFood.name) {
+        return res.status(400).json({ msg: 'Please include a name' });
+    }
+    newFood.save();
+    res.send(food);
+})
 
 // router.put('/:name', function (req, res) {
 //     let found = foods.some(food => food.name === req.params.name);
