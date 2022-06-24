@@ -101,7 +101,7 @@ router.post('/dialogflow-fulfillment', function (req, res) {
                 food.tag.ingredient.some(x => x === agent.parameters.condition)
             );
             var keys = Object.keys(selectedFoods);
-            var food = foods[keys[keys.length * Math.random() << 0]];
+            var food = selectedFoods[keys[keys.length * Math.random() << 0]];
             console.log(`randomized food: ${food.name}`);
             agent.add(`กิน${food.name}กันเถอะ`);
         }
