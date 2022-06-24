@@ -85,7 +85,7 @@ router.delete('/:name', function (req, res) {
     }
 });
 
-router.post('/dialogflow-fulfillment', function(req, res) {
+router.post('/dialogflow-fulfillment', function (req, res) {
     const agent = new WebhookClient({
         request: req,
         response: res
@@ -93,13 +93,27 @@ router.post('/dialogflow-fulfillment', function(req, res) {
 
 
     function recommendFromCategory(agent) {
-        agent.add(`กิน${agent.parameters['category']}กันเถอะ`);
+        var found = foods.some(food =>
+            food.tag.ingredient.some(x => x === agent.parameters.condition)
+        );
+        if(found){
+            var selectedFoods = foods.filter(food =>
+                food.tag.ingredient.some(x => x === agent.parameters.condition)
+            );
+            var keys = Object.keys(selectedFoods);
+            var food = foods[keys[keys.length * Math.random() << 0]];
+            console.log(`randomized food: ${food.name}`);
+            agent.add(`กิน${food.name}กันเถอะ`);
+        }
+        else {
+            agent.add('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ');
+        }
     }
 
     function recommend(agent) {
         var keys = Object.keys(foods);
         var food = foods[keys[keys.length * Math.random() << 0]];
-        agent.add('งั้นกินไอ้นี่แล้วกันนะ');
+        agent.add('งั้นกินเมนูนี้แล้วกันนะ');
         console.log(`randomized food: ${food.name}`);
         agent.add(`${food.name}`);
     }

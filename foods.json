@@ -1,485 +1,850 @@
 [
   {
     "name": "หมูทอดกระเทียม",
-    "eng_name": "Pork Garlic Stir Fried",
-    "rice": "possible",
-    "meat": [
-      "pork"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "possible",
-    "contain_milk": "none",
-    "avg_calories": 200,
-    "cuisine": "thai"
+    "eng_name": "Garlic Pepper Stir Fried Pork",
+    "tag": {
+      "ingredient": [
+        "หมู",
+        "กระเทียม",
+        "พริกไทยป่น",
+        "ผักเครื่องเคียง",
+        "ซีอิ๊วขาว"
+      ],
+      "taste": [
+        "เค็ม",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "ข้าวมันไก่",
-    "eng_name": "Chicken Rice",
-    "rice": "contain",
-    "meat": [
-      "chicken"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "none",
-    "contain_milk": "none",
-    "avg_calories": 515,
-    "cuisine": "chinese"
+    "eng_name": "Hainanese Chicken Rice",
+    "tag": {
+      "ingredient": [
+        "ไก่",
+        "เลือดไก่",
+        "ข้าว",
+        "เต้าเจี้ยว",
+        "พริกขี้หนู",
+        "ผักเครื่องเคียง",
+        "ซีอิ๊วหวาน"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "มัน",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "จีน",
+        "อาหารจานเดียว"
+      ]
+    }
+  },
+  {
+    "name": "ข้าวขาหมู",
+    "eng_name": "Braised Pork Leg with Rice",
+    "tag": {
+      "ingredient": [
+        "หมู",
+        "ขาหมู",
+        "พะโล้",
+        "ข้าว",
+        "กระเทียม",
+        "พริกไทย",
+        "ผักเครื่องเคียง",
+        "ผักกาดดอง",
+        "เห็ดหอม"
+      ],
+      "taste": [
+        "เค็ม",
+        "มัน",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "จีน",
+        "อาหารจานเดียว"
+      ]
+    }
   },
   {
     "name": "ข้าวหมูแดง",
-    "eng_name": "Chinese BBQ Pork Rice",
-    "rice": "contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "none",
-    "contain_milk": "none",
-    "avg_calories": 438,
-    "cuisine": "chinese"
+    "eng_name": "Cantonese BBQ Pork with Rice",
+    "tag": {
+      "ingredient": [
+        "หมูแดง",
+        "น้ำแดง",
+        "ข้าว",
+        "ไข่ต้ม",
+        "ผักเครื่องเคียง"
+      ],
+      "taste": [
+        "เค็ม",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "จีน",
+        "อาหารจานเดียว"
+      ]
+    }
   },
   {
-    "name": "ข้าวผัดกระเพราไก่",
-    "eng_name": "Holy Basil Chicken Fried Rice",
-    "rice": "contain",
-    "meat": [
-      "chicken"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "none",
-    "contain_milk": "none",
-    "avg_calories": 554,
-    "cuisine": "thai"
+    "name": "กะเพราไก่ราดข้าว",
+    "eng_name": "Holy Basil Stir-Fried Chicken with Rice",
+    "tag": {
+      "ingredient": [
+        "ไก่",
+        "กะเพรา",
+        "ข้าว",
+        "พริกขี้หนู",
+        "กระเทียม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
   },
   {
-    "name": "ผัดผักบุ้ง",
-    "eng_name": "Stir Fried Water Spinach",
-    "rice": "not-contain",
-    "meat": [],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "contain",
-    "contain_milk": "none",
-    "avg_calories": 210,
-    "cuisine": "chinese"
+    "name": "กะเพราหมูสับราดข้าว",
+    "eng_name": "Holy Basil Stir-Fried Minced Pork with Rice",
+    "tag": {
+      "ingredient": [
+        "หมู",
+        "กะเพรา",
+        "ข้าว",
+        "พริกขี้หนู",
+        "กระเทียม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "กะเพราหมึกราดข้าว",
+    "eng_name": "Holy Basil Stir-Fried Squid with Rice",
+    "tag": {
+      "ingredient": [
+        "หมึก",
+        "กะเพรา",
+        "ข้าว",
+        "พริกขี้หนู",
+        "กระเทียม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "กะเพรากุ้งราดข้าว",
+    "eng_name": "Holy Basil Stir-Fried Shrimp with Rice",
+    "tag": {
+      "ingredient": [
+        "กุ้ง",
+        "กะเพรา",
+        "ข้าว",
+        "พริกขี้หนู",
+        "กระเทียม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "กะเพราเนื้อวัวราดข้าว",
+    "eng_name": "Holy Basil Stir-Fried Beef with Rice",
+    "tag": {
+      "ingredient": [
+        "เนื้อวัว",
+        "กะเพรา",
+        "ข้าว",
+        "พริกขี้หนู",
+        "กระเทียม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "กะเพราทะเลราดข้าว",
+    "eng_name": "Holy Basil Stir-Fried Seafood with Rice",
+    "tag": {
+      "ingredient": [
+        "หมึก",
+        "กุ้ง",
+        "กะเพรา",
+        "ข้าว",
+        "พริกขี้หนู",
+        "กระเทียม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "ข้าวผัดหมู",
+    "eng_name": "Fried Rice with Pork",
+    "tag": {
+      "ingredient": [
+        "หมู",
+        "ไข่",
+        "ข้าว",
+        "กระเทียม",
+        "ผัก",
+        "ผักเครื่องเคียง",
+        "พริกไทย"
+      ],
+      "taste": [
+        "เค็ม",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "ข้าวผัดไก่",
+    "eng_name": "Fried Rice with Chicken",
+    "tag": {
+      "ingredient": [
+        "ไก่",
+        "ไข่",
+        "ข้าว",
+        "กระเทียม",
+        "ผัก",
+        "ผักเครื่องเคียง",
+        "พริกไทย"
+      ],
+      "taste": [
+        "เค็ม",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "ข้าวผัดหมึก",
+    "eng_name": "Fried Rice with Squid",
+    "tag": {
+      "ingredient": [
+        "หมึก",
+        "ไข่",
+        "ข้าว",
+        "กระเทียม",
+        "ผัก",
+        "ผักเครื่องเคียง",
+        "พริกไทย"
+      ],
+      "taste": [
+        "เค็ม",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "ข้าวผัดกุ้ง",
+    "eng_name": "Fried Rice with Shrimp",
+    "tag": {
+      "ingredient": [
+        "กุ้ง",
+        "ไข่",
+        "ข้าว",
+        "กระเทียม",
+        "ผัก",
+        "ผักเครื่องเคียง",
+        "พริกไทย"
+      ],
+      "taste": [
+        "เค็ม",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "ข้าวผัดทะเล",
+    "eng_name": "Fried Rice with Seafood",
+    "tag": {
+      "ingredient": [
+        "หมึก",
+        "กุ้ง",
+        "ไข่",
+        "ข้าว",
+        "กระเทียม",
+        "ผัก",
+        "ผักเครื่องเคียง",
+        "พริกไทย"
+      ],
+      "taste": [
+        "เค็ม",
+        "ปรุงสุก"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว",
+        "อาหารตามสั่ง"
+      ]
+    }
+  },
+  {
+    "name": "ผัดผักบุ้งไฟแดง",
+    "eng_name": "Stir-Fried Water Spinach",
+    "tag": {
+      "ingredient": [
+        "ผักบุ้ง",
+        "เต้าเจี้ยว",
+        "พริกขี้หนู",
+        "กระเทียม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "จีน",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "แกงจืดเต้าหู้หมูสับ",
     "eng_name": "Clear Soup with Egg Tofu and Minced Pork",
-    "rice": "not-contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "chinese"
+    "tag": {
+      "ingredient": [
+        "หมู",
+        "ซุป",
+        "เต้าหู้ไข่",
+        "ผัก",
+        "พริกไทยป่น"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "จีน",
+        "กับข้าว"
+      ]
+    }
   },
   {
-    "name": "ผัดไท",
-    "eng_name": "Pad Thai",
-    "rice": "not-contain",
-    "meat": [
-      "shrimp"
-    ],
-    "spicy": true,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "possible",
-    "contain_milk": "possible",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "name": "ผัดไทยกุ้งสด",
+    "eng_name": "Shrimp Pad Thai",
+    "tag": {
+      "ingredient": [
+        "กุ้ง",
+        "ไข่",
+        "เต้าหู้เหลือง",
+        "ไชโป๊ว",
+        "กุยช่าย",
+        "ถั่วงอก",
+        "เส้นจันท์"
+      ],
+      "taste": [
+        "เค็ม",
+        "หวาน",
+        "เปรี้ยว"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว"
+      ]
+    }
   },
   {
     "name": "เต้าหู้ทรงเครื่อง",
-    "eng_name": "Deep Fried Tofu with Gravy Sauce",
-    "rice": "not-contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "possible",
-    "contain_milk": "possible",
-    "avg_calories": null,
-    "cuisine": "chinese"
+    "eng_name": "Deep-Fried Egg Tofu with Gravy Sauce",
+    "tag": {
+      "ingredient": [
+        "หมู",
+        "เต้าหู้ไข่",
+        "ต้นหอม",
+        "กระเทียม",
+        "เห็ดหอม",
+        "ผัก",
+        "พริกไทยป่น",
+        "แป้งข้าวโพด"
+      ],
+      "taste": [
+        "เค็ม",
+        "หวาน"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว"
+      ]
+    }
   },
   {
     "name": "ต้มยำกุ้ง",
-    "eng_name": "Hot and Sour Prawn Soup",
-    "rice": "not-contain",
-    "meat": [
-      "prawn"
-    ],
-    "spicy": true,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "contain",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "eng_name": "Spicy and Sour Shrimp Soup",
+    "tag": {
+      "ingredient": [
+        "กุ้ง",
+        "ตะไคร้",
+        "ข่า",
+        "ใบมะกรูด",
+        "พริกขี้หนู",
+        "เห็ด",
+        "ผักชี"
+      ],
+      "taste": [
+        "เค็ม",
+        "เปรี้ยว",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
-    "name": "ไข่พะโล้",
-    "eng_name": "Thai Style Fragrant Eggs and Pork Chinese Five-Spice Stew",
-    "rice": "not-contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "chinese"
+    "name": "ต้มยำกุ้งน้ำข้น",
+    "eng_name": "Creamy Spicy and Sour Shrimp Soup",
+    "tag": {
+      "ingredient": [
+        "กุ้ง",
+        "ตะไคร้",
+        "ข่า",
+        "ใบมะกรูด",
+        "พริกขี้หนู",
+        "เห็ด",
+        "ผักชี",
+        "นมสด",
+        "น้ำพริกเผา"
+      ],
+      "taste": [
+        "เค็ม",
+        "เปรี้ยว",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
-    "name": "ต้มยำปลากรอบ",
-    "eng_name": "Hot and Sour Crispy Fish Soup",
-    "rice": "not-contain",
-    "meat": [
-      "fish"
-    ],
-    "spicy": true,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "contain",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "name": "ต้มยำปลาเนื้ออ่อน",
+    "eng_name": "Spicy and Sour Sheatfish Soup",
+    "tag": {
+      "ingredient": [
+        "ปลาเนื้ออ่อน",
+        "ตะไคร้",
+        "ข่า",
+        "ใบมะกรูด",
+        "พริกขี้หนู",
+        "เห็ด",
+        "ผักชี"
+      ],
+      "taste": [
+        "เค็ม",
+        "เปรี้ยว",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
+  },
+  {
+    "name": "ต้มยำปลาเนื้ออ่อนน้ำข้น",
+    "eng_name": "Creamy Spicy and Sour Sheatfish Soup",
+    "tag": {
+      "ingredient": [
+        "ปลาเนื้ออ่อน",
+        "ตะไคร้",
+        "ข่า",
+        "ใบมะกรูด",
+        "พริกขี้หนู",
+        "เห็ด",
+        "ผักชี",
+        "นมสด",
+        "น้ำพริกเผา"
+      ],
+      "taste": [
+        "เค็ม",
+        "เปรี้ยว",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "ต้มยำรวมมิตรทะเล",
-    "eng_name": "Hot and Sour Seafood Soup",
-    "rice": "not-contain",
-    "meat": [
-      "octopus",
-      "shrimp",
-      "Mussel"
-    ],
-    "spicy": false,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "eng_name": "Spicy and Sour Seafood Soup",
+    "tag": {
+      "ingredient": [
+        "หมึก",
+        "กุ้ง",
+        "หอยแมลงภู่",
+        "ตะไคร้",
+        "ข่า",
+        "ใบมะกรูด",
+        "พริกขี้หนู",
+        "เห็ด",
+        "ผักชี"
+      ],
+      "taste": [
+        "เค็ม",
+        "เปรี้ยว",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
+  },
+  {
+    "name": "ต้มยำรวมมิตรทะเลน้ำข้น",
+    "eng_name": "Creamy Spicy and Sour Seafood Soup",
+    "tag": {
+      "ingredient": [
+        "หมึก",
+        "กุ้ง",
+        "หอยแมลงภู่",
+        "ตะไคร้",
+        "ข่า",
+        "ใบมะกรูด",
+        "พริกขี้หนู",
+        "เห็ด",
+        "ผักชี",
+        "นมสด",
+        "น้ำพริกเผา"
+      ],
+      "taste": [
+        "เค็ม",
+        "เปรี้ยว",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
+  },
+  {
+    "name": "ไข่พะโล้",
+    "eng_name": "Chinese Five-Spice Eggs and Pork Fragrant Stew",
+    "tag": {
+      "ingredient": [
+        "หมู",
+        "ไข่",
+        "เต้าหู้",
+        "พะโล้"
+      ],
+      "taste": [
+        "เค็ม",
+        "หวาน"
+      ],
+      "cuisine": [
+        "จีน",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "ข้าวต้มปลา",
-    "eng_name": "Porridge with fish",
-    "rice": "contain",
-    "meat": [
-      "fish"
-    ],
-    "spicy": false,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "eng_name": "Porridge with Fish",
+    "tag": {
+      "ingredient": [
+        "ปลา",
+        "ข้าว",
+        "ข้าวต้ม",
+        "ผักชี"
+      ],
+      "taste": [
+        "เค็ม",
+        "จืด"
+      ],
+      "cuisine": [
+        "จีน",
+        "อาหารจานเดียว"
+      ]
+    }
   },
   {
     "name": "ยำปลาดุกฟู",
-    "eng_name": "Spicy deep-fried catfish salad",
-    "rice": "not-contain",
-    "meat": [
-      "catfish"
-    ],
-    "spicy": true,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "contain",
-    "contain_milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "eng_name": "Deep-Fried Shredded Catfish with Spicy Unripe Mango Salad",
+    "tag": {
+      "ingredient": [
+        "ปลาดุก",
+        "ปลาดุกฟู",
+        "ถั่วลิสง",
+        "มะม่วง",
+        "ขึ้นฉ่าย"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "หวาน"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
-    "name": "ทอดมันปลา",
-    "eng_name": "Curried fish cake",
-    "rice": "not-contain",
-    "meat": [
-      "fish"
-    ],
-    "spicy": false,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "possible",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "name": "ทอดมันปลากราย",
+    "eng_name": "Fried Curried Fish Cake",
+    "tag": {
+      "ingredient": [
+        "ปลา",
+        "ปลากราย",
+        "ไข่",
+        "ถั่วฝักยาว",
+        "พริกขี้หนู",
+        "พริกแกง"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "น้ำพริกอ่อง",
-    "eng_name": "Spicy meat and tomato dip",
-    "rice": "not-contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "possible",
-    "avg_calories": null,
-    "cuisine": "thai"
-  },
-  {
-    "name": "ผัดผักบุ้งไฟแดง",
-    "eng_name": "Stir fried Water Spinach",
-    "rice": "not-contain",
-    "meat": [
-      ""
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "possible",
-    "contain_milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "eng_name": "Spicy Pork and Tomato Dip",
+    "tag": {
+      "ingredient": [
+        "มะเขือเทศ",
+        "หมู",
+        "พริกขี้หนู",
+        "กระเทียม",
+        "ต้นหอม"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "ขนมจีนน้ำยา",
-    "eng_name": "Rice noodles in fish curry sauce with vegetables",
-    "rice": "not-contain",
-    "meat": [
-      "fish"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "contain",
-    "avg_calories": null,
-    "cuisine": "chinese"
+    "eng_name": "Rice Noodle with Fish Curry",
+    "tag": {
+      "ingredient": [
+        "ขนมจีน",
+        "ปลา",
+        "กะทิ",
+        "ผักเครื่องเคียง"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว"
+      ]
+    }
+  },
+  {
+    "name": "ขนมจีนแกงเขียวหวานไก่",
+    "eng_name": "Rice Noodle with Chicken Sweet Green Curry",
+    "tag": {
+      "ingredient": [
+        "ขนมจีน",
+        "ไก่",
+        "เลือดไก่",
+        "ใบมะกรูด",
+        "โหระพา",
+        "พริกแกง",
+        "กะทิ",
+        "มะเขือพวง",
+        "มะเขือเปราะ",
+        "แกงเขียวหวาน"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "หวาน"
+      ],
+      "cuisine": [
+        "ไทย",
+        "อาหารจานเดียว"
+      ]
+    }
+  },
+  {
+    "name": "ห่อหมกปลา",
+    "eng_name": "Steamed Curried Fish Cake",
+    "tag": {
+      "ingredient": [
+        "ปลา",
+        "ไข่",
+        "ใบมะกรูด",
+        "โหระพา",
+        "พริกขี้หนู",
+        "พริกแกง",
+        "กะทิ",
+        "กะหล่ำปลี",
+        "ใบยอ",
+        "แป้งข้าวเจ้า"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "ห่อหมกปู",
-    "eng_name": "Streamed Crab Curry in a Banana Leaf Cup",
-    "rice": "not-contain",
-    "meat": [
-      "crab"
-    ],
-    "spicy": false,
-    "seafood": true,
-    "green_level": "none",
-    "contain_nut": "not-contain",
-    "contain_milk": "contain",
-    "avg_calories": null,
-    "cuisine": "chiness"
+    "eng_name": "Steamed Curried Crab Cake",
+    "tag": {
+      "ingredient": [
+        "ปู",
+        "ไข่",
+        "ใบมะกรูด",
+        "โหระพา",
+        "พริกขี้หนู",
+        "กระชาย",
+        "พริกแกง",
+        "กะทิ",
+        "กะหล่ำปลี",
+        "ใบยอ",
+        "แป้งข้าวเจ้า"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
-    "name": "ข้าวผัดกระเพราหมู",
-    "eng_name": "Fired rice with basil and pork",
-    "rice": "contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "cuisine": "chinese"
-  },
-  {
-    "name": "ผัดกะเพรา",
-    "eng_name": "Basil Fried Rice",
-    "rice": "possible",
-    "meat": [
-      "pork",
-      "chicken",
-      "beef",
-      "seafood"
-    ],
-    "spicy": true,
-    "seafood": true,
-    "green_level": "none",
-    "contain-nut": "not-contain",
-    "contain-milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "thai"
-  },
-  {
-    "name": "ข้าวผัดกระเพราไก่",
-    "eng_name": "Fired rice with basil and chicken",
-    "rice": "contain",
-    "meat": [
-      "chicken"
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "cuisine": "thai"
-  },
-  {
-    "name": "แกงเขียวหวาน",
-    "eng_name": "Green Curry With Meat",
-    "rice": "not-contain",
-    "meat": [
-      "pork",
-      "chicken",
-      "beef"
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "not-contain",
-    "contain-milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "thai"
-  },
-  {
-    "name": "ข้าวผัดกระเพราหมึก",
-    "eng_name": "Fired rice with basil and octopus",
-    "rice": "contain",
-    "meat": [
-      "octopus"
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "thai"
-  },
-  {
-    "name": "ข้าวผัดกระเพราเนื้อ",
-    "eng_name": "Fired rice with basil and meat",
-    "rice": "contain",
-    "meat": [
-      "meat"
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "thai"
-  },
-  {
-    "name": "ข้าวผัดกระเพราทะเล",
-    "eng_name": "Fired rice with basil and seafood",
-    "rice": "contain",
-    "meat": [
-      "seafood"
-    ],
-    "spicy": true,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "thai"
-  },
-  {
-    "name": "ข้าวขาหมู",
-    "eng_name": "BBQ pork Rice",
-    "rice": "contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "chiness"
-  },
-  {
-    "name": "ข้าวผัดหมู",
-    "eng_name": "Fried rice with pork",
-    "rice": "contain",
-    "meat": [
-      "pork"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "chiness"
-  },
-  {
-    "name": "ข้าวผัดไก่",
-    "eng_name": "Fried rice with chicken",
-    "rice": "contain",
-    "meat": [
-      "chicken"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "chiness"
-  },
-  {
-    "name": "ข้าวผัดหมึก",
-    "eng_name": "Fried rice with octopus",
-    "rice": "contain",
-    "meat": [
-      "octopus"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "chiness"
-  },
-  {
-    "name": "ข้าวผัดทะเล",
-    "eng_name": "Fried rice with seafood",
-    "rice": "possible",
-    "meat": [
-      "seafood"
-    ],
-    "spicy": false,
-    "seafood": false,
-    "green_level": "none",
-    "contain-nut": "none",
-    "contain-milk": "none",
-    "avg_calories": null,
-    "cuisine": "chiness"
+    "name": "แกงเขียวหวานไก่",
+    "eng_name": "Chicken Sweet Green Curry",
+    "tag": {
+      "ingredient": [
+        "ไก่",
+        "เลือดไก่",
+        "ใบมะกรูด",
+        "โหระพา",
+        "พริกแกง",
+        "กะทิ",
+        "มะเขือพวง",
+        "มะเขือเปราะ"
+      ],
+      "taste": [
+        "เค็ม",
+        "เผ็ด",
+        "หวาน"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   },
   {
     "name": "ยำปลากระป๋อง",
-    "eng_name": "Thai Spicy Canned Sardines Salad",
-    "rice": "not-contain",
-    "meat": [
-      "fish"
-    ],
-    "spicy": true,
-    "seafood": true,
-    "green_level": "none",
-    "contain-nut": "not-contain",
-    "contain-milk": "not-contain",
-    "avg_calories": null,
-    "cuisine": "thai"
+    "eng_name": "Spicy Canned Sardines Salad",
+    "tag": {
+      "ingredient": [
+        "ปลา",
+        "ปลากระป๋อง",
+        "หอมแดง",
+        "ตะไคร้",
+        "พริกขี้หนู"
+      ],
+      "taste": [
+        "เผ็ด",
+        "เปรี้ยว",
+        "เค็ม"
+      ],
+      "cuisine": [
+        "ไทย",
+        "กับข้าว"
+      ]
+    }
   }
 ]
