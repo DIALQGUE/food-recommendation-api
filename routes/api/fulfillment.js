@@ -1,61 +1,68 @@
+const express = require('express');
 const Foods = require('../../models/foods-model');
+const router = express.Router();
 
-const {
-    dialogflow
-} = require('actions-on-google');
+const { WebhookClient } = require('dialogflow-fulfillment');
 
-const agent = dialogflow();
-agent.requestSource = agent.ACTIONS_ON_GOOGLE;
+router.post('/', function (req, res) {
+    const agent = new WebhookClient({
+        request: req,
+        response: res
+    });
 
-agent.intent('Recommend - condition - yes', (conv, params) => {
-    const condition = params.condition;
+    let intentMap = new Map();
 
-    return new Promise((resolve, reject) => {
-        Foods.findOne({ 'tag.ingredient': condition }).lean().exec((err, found) => {
-            if (!found)
-                resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ');
-            else {
-                Foods.find({ 'tag.ingredient': condition }).lean().exec((err, selectedFoods) => {
-                    try {
-                        var random = Math.floor(Math.random() * selectedFoods.length);
-                        const food = selectedFoods[random];
-                        resolve(`กิน${food.name}กันเถอะ`);
-                    }
-                    catch (err) {
-                        reject(err);
-                    }
-                });
-            }
+    intentMap.set('Recommend - condition - yes', (agent) => {
+        return new Promise((resolve, reject) => {
+            Foods.findOne({ 'tag.ingredient': agent.parameters.condition }).lean().exec((err, found) => {
+                if (!found)
+                    resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ');
+                else {
+                    Foods.find({ 'tag.ingredient': agent.parameters.condition }).lean().exec((err, selectedFoods) => {
+                        try {
+                            var random = Math.floor(Math.random() * selectedFoods.length);
+                            const food = selectedFoods[random];
+                            resolve(`กิน${food.name}กันเถอะ`);
+                        }
+                        catch (err) {
+                            reject(err);
+                        }
+                    });
+                }
+            })
         })
-    })
-        .then((msg) => {
-            return conv.ask(msg);
+            .then((msg) => {
+                agent.add(msg);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
+
+
+    intentMap.set('Recommend - no condition', (agent) => {
+        return new Promise((resolve, reject) => {
+            Foods.find().lean().exec((err, foods) => {
+                try {
+                    var random = Math.floor(Math.random() * foods.length);
+                    const food = foods[random];
+                    console.log(`randomized food: ${food.name}`);
+                    resolve(`กิน${food.name}กันเถอะ`);
+                }
+                catch (err) {
+                    reject(err);
+                }
+            });
         })
-        .catch(err => {
-            console.log(err);
-        });
+            .then((msg) => {
+                agent.add(msg);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
+
+    agent.handleRequest(intentMap);
 });
 
-agent.intent('Recommend - no condition', (conv) => {
-    return new Promise((resolve, reject) => {
-        Foods.find().lean().exec((err, foods) => {
-            try {
-                var random = Math.floor(Math.random() * foods.length);
-                const food = foods[random];
-                console.log(`randomized food: ${food.name}`);
-                resolve(`กิน${food.name}กันเถอะ`);
-            }
-            catch (err) {
-                reject(err);
-            }
-        });
-    })
-        .then((msg) => {
-            return conv.ask(msg);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
-
-module.exports = agent;
+module.exports = router;
