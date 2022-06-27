@@ -92,17 +92,17 @@ router.post('/dialogflow-fulfillment', function (req, res) {
         Foods.findOne({ name: req.params.name }).lean().exec((err, found) => {
             if (err) throw err;
             if (!found)
-                agent.add('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ');
+                return agent.add('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ');
             else {
                 let selectedFoods = Foods.find({ name: agent.parameters.condition });
                 selectedFoods.countDocuments().exec(function (err, count) {
                     if (err) throw err;
 
-                    var random = Math.floor(Math.random() * count)
+                    var random = Math.floor(Math.random() * count);
                     selectedFoods.findOne().skip(random).exec((err, food) => {
                         if (err) throw err;
-                        console.log(`randomized food: ${food.name}`);
-                        agent.add(`กิน${food.name}กันเถอะ`);
+                        //console.log(`randomized food: ${food.name}`);
+                        return agent.add(`กิน${food.name}กันเถอะ`);
                     });
                 });
             }
@@ -112,13 +112,12 @@ router.post('/dialogflow-fulfillment', function (req, res) {
     function recommend(agent) {
         Foods.countDocuments().exec(function (err, count) {
             if (err) throw err;
-
-            var random = Math.floor(Math.random() * count)
+            console.log(`total food: ${count}`);
+            var random = Math.floor(Math.random() * count);
             Foods.findOne().skip(random).exec((err, food) => {
                 if (err) throw err;
-                agent.add('งั้นกินเมนูนี้แล้วกันนะ');
                 console.log(`randomized food: ${food.name}`);
-                agent.add(`${food.name}`);
+                return agent.add(`กิน${food.name}กันเถอะ`);
             });
         });
     }
