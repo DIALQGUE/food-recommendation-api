@@ -5,6 +5,7 @@ const {
 } = require('actions-on-google');
 
 const agent = dialogflow();
+agent.requestSource = agent.ACTIONS_ON_GOOGLE;
 
 agent.intent('Recommend - condition - yes', (conv, params) => {
     const condition = params.condition;
