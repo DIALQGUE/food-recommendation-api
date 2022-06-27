@@ -29,7 +29,7 @@ agent.intent('Recommend - condition - yes', (conv, params) => {
         })
     })
         .then((msg) => {
-            conv.ask(msg);
+            return conv.ask(msg);
         })
         .catch(err => {
             console.log(err);
@@ -51,7 +51,7 @@ agent.intent('Recommend - no condition', (conv) => {
         });
     })
         .then((msg) => {
-            conv.ask(msg);
+            return conv.ask(msg);
         })
         .catch(err => {
             console.log(err);
