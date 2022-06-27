@@ -3,10 +3,10 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
-const fs = require('fs');
 
 const logger = require('./middleware/logger');
 const router = require('./routes/api/foods');
+const agent = require('./routes/api/fulfillment');
 
 const app = express();
 
@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger);
 
 app.use('/api/foods', router);
+app.post('/api/fulfillment', agent);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`));

@@ -2,10 +2,6 @@ const express = require('express');
 const fs = require('fs');
 const Foods = require('../../models/foods-model');
 
-const {
-    WebhookClient
-} = require('dialogflow-fulfillment');
-
 const router = express.Router();
 
 //let foods = JSON.parse(fs.readFileSync('foods.json'));
@@ -80,52 +76,5 @@ router.post('/', function (req, res) {
 //         res.status(400).json({ msg: `No food with name ${req.params.name}` })
 //     }
 // });
-
-router.post('/dialogflow-fulfillment', function (req, res) {
-    const agent = new WebhookClient({
-        request: req,
-        response: res
-    });
-
-
-    function recommendFromCategory(agent) {
-        Foods.findOne({ name: req.params.name }).lean().exec((err, found) => {
-            if (err) throw err;
-            if (!found)
-                return agent.add('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ');
-            else {
-                let selectedFoods = Foods.find({ name: agent.parameters.condition });
-                selectedFoods.countDocuments().exec(function (err, count) {
-                    if (err) throw err;
-
-                    var random = Math.floor(Math.random() * count);
-                    selectedFoods.findOne().skip(random).exec((err, food) => {
-                        if (err) throw err;
-                        //console.log(`randomized food: ${food.name}`);
-                        return agent.add(`กิน${food.name}กันเถอะ`);
-                    });
-                });
-            }
-        });
-    }
-
-    function recommend(agent) {
-        Foods.countDocuments().exec(function (err, count) {
-            if (err) throw err;
-            console.log(`total food: ${count}`);
-            var random = Math.floor(Math.random() * count);
-            Foods.findOne().skip(random).exec((err, food) => {
-                if (err) throw err;
-                console.log(`randomized food: ${food.name}`);
-                return agent.add(`กิน${food.name}กันเถอะ`);
-            });
-        });
-    }
-
-    let intentMap = new Map();
-    intentMap.set('Recommend - condition - yes', recommendFromCategory);
-    intentMap.set('Recommend - no condition', recommend);
-    agent.handleRequest(intentMap);
-});
 
 module.exports = router;
