@@ -22,6 +22,16 @@ const foodsSchema = new Schema({
     tag: tagSchema
 }, {collection: 'Foods'});
 
+const userHistorySchema = new Schema({
+    id: Schema.Types.ObjectId,
+    user_id: {type: String, required: true},
+    food: {type: Schema.Types.ObjectId, ref: 'Foods'},
+    date: {type: Date, default: Date.now},
+    accepted: {type: Boolean, default: false}
+}, {collection: 'userHistory'});
+
 foodsSchema.set('toJSON', { getters: true, virtuals: false });
+userHistorySchema.set('toJSON', { getters: true, virtuals: false });
 
 const Foods = module.exports = mongoose.model('Foods', foodsSchema);
+const userHistory = module.exports = mongoose.model('userHistory', userHistorySchema);

@@ -22,7 +22,7 @@ router.post('/', function (req, res) {
                         try {
                             var random = Math.floor(Math.random() * selectedFoods.length);
                             const food = selectedFoods[random];
-                            resolve(`กิน${food.name}กันเถอะ`);
+                            resolve(`${food.name}`);
                         }
                         catch (err) {
                             reject(err);
@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
             })
         })
             .then((msg) => {
-                agent.add(msg);
+                agent.setContext({ name: 'response', lifespan: 1, parameters: { food: msg } });
             })
             .catch(err => {
                 console.log(err);
@@ -47,7 +47,7 @@ router.post('/', function (req, res) {
                     var random = Math.floor(Math.random() * foods.length);
                     const food = foods[random];
                     console.log(`randomized food: ${food.name}`);
-                    resolve(`กิน${food.name}กันเถอะ`);
+                    resolve(`${food.name}`);
                 }
                 catch (err) {
                     reject(err);
@@ -55,11 +55,27 @@ router.post('/', function (req, res) {
             });
         })
             .then((msg) => {
-                agent.add(msg);
+                agent.setContext({ name: 'response', lifespan: 1, parameters: { food: msg } });
             })
             .catch(err => {
                 console.log(err);
             });
+    });
+
+    intentMap.set('Recommend - accepted', (agent) => {
+        const history = new userHistory({
+            user_id: agent.originalRequest.payload.data.user.id,
+            food: agent.getContext('response').parameters.food,
+            date: Date.now(),
+            accepted: true
+        });
+
+        history.save((err, saved) => {
+            if (err)
+                console.log(err);
+            else
+                console.log(`user history saved: ${saved}`);
+        });
     });
 
     agent.handleRequest(intentMap);
