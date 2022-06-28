@@ -33,5 +33,7 @@ const userHistorySchema = new Schema({
 foodsSchema.set('toJSON', { getters: true, virtuals: false });
 userHistorySchema.set('toJSON', { getters: true, virtuals: false });
 
-const Foods = module.exports = mongoose.model('Foods', foodsSchema);
-const userHistory = module.exports = mongoose.model('userHistory', userHistorySchema);
+const Foods = mongoose.model('Foods', foodsSchema);
+const UserHistory = mongoose.model('UserHistory', userHistorySchema);
+
+module.exports = { Foods, UserHistory };

@@ -1,24 +1,33 @@
 const express = require('express');
-const Foods = require('../../models/foods-model');
+const {Foods, UserHistory} = require('../../models/foods-model');
 
 const router = express.Router();
 
 //let foods = JSON.parse(fs.readFileSync('foods.json'));
 
 router.get('/', function (req, res) {
-    Foods.find().lean().exec((err, food) => {
+    Foods.find().lean().exec((err, foods) => {
         if (err) throw err;
-        res.json(food);
+        console.log(foods);
+        res.send(foods);
+    });
+});
+
+router.get('/history', function (req, res) {
+    UserHistory.find().lean().exec((err, history) => {
+        if (err) throw err;
+        console.log(history);
+        res.send(history);
     });
 });
 
 router.get('/:name', function (req, res) {
     Foods.find({ name: req.params.name }).lean().exec((err, food) => {
         if (err) throw err;
-        if (food.length === 0)
+        if (foods.length === 0)
             res.status(400).json({ msg: `No food with name ${req.params.name}` })
         else
-            res.json(food);
+            res.send(food);
     });
 });
 
