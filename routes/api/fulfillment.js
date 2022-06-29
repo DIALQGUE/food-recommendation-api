@@ -154,22 +154,61 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
-        const history = new UserHistory({
-            user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
-            food: lastSuggestion,
-            date: Date.now(),
-            accepted: true
+        Foods.findOne({ name: lastSuggestion }).exec((err, found) => {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            }
+            else {
+                console.log(`found: ${found}`);
+                try {
+                    const history = new UserHistory({
+                        user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
+                        food: found,
+                        date: Date.now(),
+                        accepted: true
+                    });
+
+                    if (lastSuggestion) {
+                        history.save((err, saved) => {
+                            if (err)
+                                console.log(err);
+                            else {
+                                console.log(`user history saved: ${saved}`);
+                                res.send(saved);
+                            }
+                        });
+                    }
+                    lastSuggestion = '';
+                }
+                catch (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                }
+            }
         });
 
-        if (lastSuggestion) {
-            history.save((err, saved) => {
-                if (err)
-                    console.log(err);
-                else
-                    console.log(`user history saved: ${saved}`);
-            });
-        }
-        lastSuggestion = '';
+        // try {
+        //     const history = new UserHistory({
+        //         user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
+        //         food: foodID,
+        //         date: Date.now(),
+        //         accepted: true
+        //     });
+
+        //     if (lastSuggestion) {
+        //         history.save((err, saved) => {
+        //             if (err)
+        //                 console.log(err);
+        //             else
+        //                 console.log(`user history saved: ${saved}`);
+        //         });
+        //     }
+        //     lastSuggestion = '';
+        // }
+        // catch (err) {
+        //     console.log(err);
+        // }
     }
 });
 
