@@ -154,7 +154,7 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
-        const history = new userHistory({
+        const history = new UserHistory({
             user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
             food: lastSuggestion,
             date: Date.now(),
