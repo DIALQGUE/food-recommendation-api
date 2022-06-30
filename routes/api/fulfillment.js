@@ -172,7 +172,7 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
-        const lastSuggestion = res.body.outputContexts[{ "name": "response" }].parameters.food;
+        const lastSuggestion = res.body.outputContexts.find(context => context.name.includes('/response')).parameters.food;
         Foods.findOne({ name: lastSuggestion }).exec((err, found) => {
             if (err) {
                 console.log(err);
