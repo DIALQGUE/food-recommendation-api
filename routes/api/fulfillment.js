@@ -129,7 +129,7 @@ router.post('/', function (req, res) {
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
-                    name: `${contextPrefix}response`,
+                    name: `${contextPrefix}/response`,
                     lifespanCount: 1,
                     parameters: { food: msg }
                 });
@@ -160,7 +160,7 @@ router.post('/', function (req, res) {
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
-                    name: `${contextPrefix}response`,
+                    name: `${contextPrefix}/response`,
                     lifespanCount: 1,
                     parameters: { food: msg }
                 });
