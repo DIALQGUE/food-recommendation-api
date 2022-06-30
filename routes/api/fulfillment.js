@@ -4,6 +4,13 @@ const router = express.Router();
 
 //const { WebhookClient } = require('dialogflow-fulfillment');
 
+function getContextPrefix(outputContexts) {
+    if (outputContexts.length > 0) {
+        return outputContexts[0].name.split('/')[0];
+    }
+    return '';
+}
+
 const fulfillmentMessages = {
     "fulfillmentMessages": [
         {
@@ -14,7 +21,7 @@ const fulfillmentMessages = {
             }
         }
     ],
-    "outputContexts":[]
+    "outputContexts": []
 }
 
 router.post('/', function (req, res) {
@@ -117,13 +124,13 @@ router.post('/', function (req, res) {
             })
         })
             .then((msg) => {
-                lastSuggestion = msg;
-                let newResponse = fulfillmentMessages;
+                const contextPrefix = getContextPrefix(req.body.queryResult.outputContexts);
+                let newResponse = new fulfillmentMessages;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
-                    name: 'response',
-                    lifespan: 1,
+                    name: `{contextPrefix}response`,
+                    lifespanCount: 1,
                     parameters: { food: msg }
                 });
                 res.send(newResponse);
@@ -148,13 +155,13 @@ router.post('/', function (req, res) {
             });
         })
             .then((msg) => {
-                lastSuggestion = msg;
-                let newResponse = fulfillmentMessages;
+                const contextPrefix = getContextPrefix(req.body.queryResult.outputContexts);
+                let newResponse = new fulfillmentMessages;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
-                    name: 'response',
-                    lifespan: 1,
+                    name: `{contextPrefix}response`,
+                    lifespanCount: 1,
                     parameters: { food: msg }
                 });
                 res.send(newResponse);
@@ -165,8 +172,8 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
-        const lastSuggestion = res.body.outputContexts[{"name" : "response"}].parameters.food;
-        Foods.findOne({ name: lastSuggestion}).exec((err, found) => {
+        const lastSuggestion = res.body.outputContexts[{ "name": "response" }].parameters.food;
+        Foods.findOne({ name: lastSuggestion }).exec((err, found) => {
             if (err) {
                 console.log(err);
                 res.sendStatus(500);
