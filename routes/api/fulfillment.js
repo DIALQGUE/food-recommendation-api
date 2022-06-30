@@ -172,14 +172,15 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
-        const lastSuggestion = res.body.outputContexts.find(context => context.name.includes('/response')).parameters.food;
+        const lastSuggestion = req.body.queryResult.outputContexts.find(context => context.name.includes('/response')).parameters.food;
+        console.log(`last suggestion: ${lastSuggestion}`);
         Foods.findOne({ name: lastSuggestion }).exec((err, found) => {
             if (err) {
                 console.log(err);
                 res.sendStatus(500);
             }
             else {
-                console.log(`found: ${found}`);
+                console.log(`found: ${found.name}`);
                 try {
                     const history = new UserHistory({
                         user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
