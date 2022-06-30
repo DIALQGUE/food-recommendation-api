@@ -130,7 +130,7 @@ router.post('/', function (req, res) {
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
                     name: `${contextPrefix}/response`,
-                    lifespanCount: 1,
+                    lifespanCount: 2,
                     parameters: { food: msg }
                 });
                 res.send(newResponse);
@@ -161,7 +161,7 @@ router.post('/', function (req, res) {
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
                     name: `${contextPrefix}/response`,
-                    lifespanCount: 1,
+                    lifespanCount: 2,
                     parameters: { food: msg }
                 });
                 res.send(newResponse);
