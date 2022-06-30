@@ -13,10 +13,9 @@ const fulfillmentMessages = {
                 ]
             }
         }
-    ]
+    ],
+    "outputContexts":[]
 }
-
-var lastSuggestion = "";
 
 router.post('/', function (req, res) {
     // const agent = new WebhookClient({
@@ -121,6 +120,12 @@ router.post('/', function (req, res) {
                 lastSuggestion = msg;
                 let newResponse = fulfillmentMessages;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
+                newResponse.outputContexts = req.body.queryResult.outputContexts;
+                newResponse.outputContexts.push({
+                    name: 'response',
+                    lifespan: 1,
+                    parameters: { food: msg }
+                });
                 res.send(newResponse);
             })
             .catch(err => {
@@ -146,6 +151,12 @@ router.post('/', function (req, res) {
                 lastSuggestion = msg;
                 let newResponse = fulfillmentMessages;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
+                newResponse.outputContexts = req.body.queryResult.outputContexts;
+                newResponse.outputContexts.push({
+                    name: 'response',
+                    lifespan: 1,
+                    parameters: { food: msg }
+                });
                 res.send(newResponse);
             })
             .catch(err => {
@@ -154,7 +165,8 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
-        Foods.findOne({ name: lastSuggestion }).exec((err, found) => {
+        const lastSuggestion = res.body.outputContexts[{"name" : "response"}].parameters.food;
+        Foods.findOne({ name: lastSuggestion}).exec((err, found) => {
             if (err) {
                 console.log(err);
                 res.sendStatus(500);
