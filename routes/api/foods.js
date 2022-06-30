@@ -8,7 +8,6 @@ const router = express.Router();
 router.get('/', function (req, res) {
     Foods.find().lean().exec((err, foods) => {
         if (err) throw err;
-        console.log(foods);
         res.send(foods);
     });
 });
@@ -16,7 +15,6 @@ router.get('/', function (req, res) {
 router.get('/history', function (req, res) {
     UserHistory.find().lean().exec((err, history) => {
         if (err) throw err;
-        console.log(history);
         res.send(history);
     });
 });

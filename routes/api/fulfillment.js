@@ -125,7 +125,7 @@ router.post('/', function (req, res) {
         })
             .then((msg) => {
                 const contextPrefix = getContextPrefix(req.body.queryResult.outputContexts);
-                let newResponse = new fulfillmentMessages;
+                let newResponse = fulfillmentMessages;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
@@ -156,7 +156,7 @@ router.post('/', function (req, res) {
         })
             .then((msg) => {
                 const contextPrefix = getContextPrefix(req.body.queryResult.outputContexts);
-                let newResponse = new fulfillmentMessages;
+                let newResponse = fulfillmentMessages;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}`;
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 newResponse.outputContexts.push({
