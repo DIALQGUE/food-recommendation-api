@@ -6,7 +6,7 @@ const router = express.Router();
 
 function getContextPrefix(outputContexts) {
     if (outputContexts.length > 0) {
-        return outputContexts[0].name.split('/')[0];
+        return outputContexts[0].name.split('/').slice(0, -1).join('/');
     }
     return '';
 }
