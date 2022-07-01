@@ -1,5 +1,5 @@
 const express = require('express');
-const {Foods, UserHistory} = require('../../models/foods-model');
+const { Foods, UserHistory } = require('../../models/foods-model');
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.get('/history', function (req, res) {
 });
 
 router.get('/:name', function (req, res) {
-    Foods.find({ name: req.params.name }).lean().exec((err, food) => {
+    Foods.find({ name: req.params.name }).lean().exec((err, foods) => {
         if (err) throw err;
         if (foods.length === 0)
             res.status(400).json({ msg: `No food with name ${req.params.name}` })
@@ -29,19 +29,36 @@ router.get('/:name', function (req, res) {
     });
 });
 
-router.post('/', function (req, res) {
-    const food = req.body;
-    let newFood = new Foods({
-        name: food.name,
-        eng_name: food.eng_name,
-        tag: food.tag
-    });
-    if (!newFood.name) {
-        return res.status(400).json({ msg: 'Please include a name' });
+router.post('/:multiple', function (req, res) {
+    if (req.params.multiple === 'true') {
+        const foods = req.body;
+        foods.forEach(food => {
+            let newFood = new Foods({
+                name: food.name,
+                eng_name: food.eng_name,
+                tag: food.tag
+            });
+            if (!newFood.name) {
+                return res.status(400).json({ msg: 'Please include a name for every food' });
+            }
+            newFood.save();
+        });
+        res.json({ msg: `all foods have been added` });
     }
-    newFood.save();
-    res.send(food);
-})
+    else {
+        const food = req.body;
+        let newFood = new Foods({
+            name: food.name,
+            eng_name: food.eng_name,
+            tag: food.tag
+        });
+        if (!newFood.name) {
+            return res.status(400).json({ msg: 'Please include a name' });
+        }
+        newFood.save();
+        res.json({ msg: `${food.name} has been added` });
+    }
+});
 
 // router.put('/:name', function (req, res) {
 //     let found = foods.some(food => food.name === req.params.name);
