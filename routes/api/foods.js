@@ -6,7 +6,7 @@ const router = express.Router();
 //let foods = JSON.parse(fs.readFileSync('foods.json'));
 
 router.get('/', function (req, res) {
-    Foods.find().lean().exec((err, foods) => {
+    Foods.find().populate('food').lean().exec((err, foods) => {
         if (err) throw err;
         res.send(foods);
     });
