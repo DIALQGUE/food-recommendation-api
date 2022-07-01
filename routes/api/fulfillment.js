@@ -111,14 +111,10 @@ router.post('/', function (req, res) {
                     resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ');
                 else {
                     Foods.find({ 'tag.ingredient': parameters.condition }).lean().exec((err, selectedFoods) => {
-                        try {
-                            var random = Math.floor(Math.random() * selectedFoods.length);
-                            const food = selectedFoods[random];
-                            console.log(`randomized food: ${food.name}`);
-                            resolve(`${food.name}`);
-                        }
-                        catch (err) {
+                        if (err)
                             reject(err);
+                        else {
+                            resolve(recommend.randomRecommend(foods));
                         }
                     });
                 }
@@ -178,6 +174,14 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
+        var user_id = 'testID';
+        try {
+            user_id = req.body.originalDetectIntentRequest.payload.data.user.id;
+        }
+        catch (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
         const lastSuggestion = req.body.queryResult.outputContexts.find(context => context.name.includes('/response')).parameters.food;
         console.log(`last suggestion: ${lastSuggestion}`);
         Foods.findOne({ name: lastSuggestion }).exec((err, found) => {
@@ -189,7 +193,7 @@ router.post('/', function (req, res) {
                 console.log(`found: ${found.name}`);
                 try {
                     const history = new UserHistory({
-                        user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
+                        user_id: user_id,
                         food: found,
                         date: Date.now(),
                     });
