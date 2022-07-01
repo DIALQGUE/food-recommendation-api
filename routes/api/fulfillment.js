@@ -114,7 +114,7 @@ router.post('/', function (req, res) {
                         if (err)
                             reject(err);
                         else {
-                            resolve(recommend.randomRecommend(foods));
+                            resolve(recommend.randomRecommend(selectedFoods));
                         }
                     });
                 }
