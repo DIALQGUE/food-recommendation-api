@@ -27,7 +27,6 @@ const userHistorySchema = new Schema({
     user_id: {type: String, required: true},
     food: {type: Schema.Types.ObjectId, ref: 'Foods'},
     date: {type: Date, default: Date.now},
-    accepted: {type: Boolean, default: false}
 }, {collection: 'UserHistory'});
 
 foodsSchema.set('toJSON', { getters: true, virtuals: false });

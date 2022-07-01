@@ -1,6 +1,7 @@
 const express = require('express');
-const { Foods, UserHistory } = require('../../models/foods-model');
 const router = express.Router();
+const { Foods, UserHistory } = require('../../models/foods-model');
+const recommend = require('../../recommend');
 
 //const { WebhookClient } = require('dialogflow-fulfillment');
 
@@ -144,13 +145,17 @@ router.post('/', function (req, res) {
         return new Promise((resolve, reject) => {
             Foods.find().lean().exec((err, foods) => {
                 try {
-                    var random = Math.floor(Math.random() * foods.length);
-                    const food = foods[random];
-                    console.log(`randomized food: ${food.name}`);
-                    resolve(`${food.name}`);
+                    let user_id = req.body.originalDetectIntentRequest.payload.data.user.id
+                    let userHistory = UserHistory.find({ user_id: user_id }).lean();
+                    let userHistoryLength = userHistory.length | 0;
+                    if (userHistoryLength <= 10)
+                        resolve(recommend.randomRecommend(foods));
+                    else if (userHistoryLength <= 50)
+                        resolve(recommend.biasRandomRecommend(foods, userHistory));
                 }
                 catch (err) {
                     reject(err);
+                    res.sendStatus(500);
                 }
             });
         })
@@ -168,6 +173,7 @@ router.post('/', function (req, res) {
             })
             .catch(err => {
                 console.log(err);
+                res.sendStatus(500);
             });
     }
 
@@ -186,7 +192,6 @@ router.post('/', function (req, res) {
                         user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
                         food: found,
                         date: Date.now(),
-                        accepted: true
                     });
 
                     if (lastSuggestion) {
@@ -199,7 +204,6 @@ router.post('/', function (req, res) {
                             }
                         });
                     }
-                    lastSuggestion = '';
                 }
                 catch (err) {
                     console.log(err);
