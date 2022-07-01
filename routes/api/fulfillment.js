@@ -138,11 +138,10 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - no condition') {
-        console.log(req.body.originalDetectIntentRequest.payload.data);
         return new Promise((resolve, reject) => {
             Foods.find().lean().exec((err, foods) => {
                 try {
-                    let user_id = req.body.originalDetectIntentRequest.payload.data.user.id
+                    let user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
                     let userHistory = UserHistory.find({ user_id: user_id }).lean();
                     let userHistoryLength = userHistory.length | 0;
                     if (userHistoryLength <= 10)
@@ -177,7 +176,7 @@ router.post('/', function (req, res) {
     else if (intent === 'Recommend - accepted') {
         var user_id = 'testID';
         try {
-            user_id = req.body.originalDetectIntentRequest.payload.data.user.id;
+            user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
         }
         catch (err) {
             console.log(err);
