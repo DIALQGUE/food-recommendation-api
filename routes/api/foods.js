@@ -6,14 +6,14 @@ const router = express.Router();
 //let foods = JSON.parse(fs.readFileSync('foods.json'));
 
 router.get('/', function (req, res) {
-    Foods.find().populate('food').lean().exec((err, foods) => {
+    Foods.find().lean().exec((err, foods) => {
         if (err) throw err;
         res.send(foods);
     });
 });
 
 router.get('/history', function (req, res) {
-    UserHistory.find().lean().exec((err, history) => {
+    UserHistory.find().populate('food').lean().exec((err, history) => {
         if (err) throw err;
         res.send(history);
     });
