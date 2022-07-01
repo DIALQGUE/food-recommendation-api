@@ -138,6 +138,7 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - no condition') {
+        console.log(req.body.originalDetectIntentRequest.payload.data);
         return new Promise((resolve, reject) => {
             Foods.find().lean().exec((err, foods) => {
                 try {
