@@ -232,29 +232,10 @@ router.post('/', function (req, res) {
                 }
             }
         });
-
-        // try {
-        //     const history = new UserHistory({
-        //         user_id: req.body.originalDetectIntentRequest.payload.data.user.id,
-        //         food: foodID,
-        //         date: Date.now(),
-        //         accepted: true
-        //     });
-
-        //     if (lastSuggestion) {
-        //         history.save((err, saved) => {
-        //             if (err)
-        //                 console.log(err);
-        //             else
-        //                 console.log(`user history saved: ${saved}`);
-        //         });
-        //     }
-        //     lastSuggestion = '';
-        // }
-        // catch (err) {
-        //     console.log(err);
-        // }
     }
+
+    else
+        res.sendStatus(200);
 });
 
 module.exports = router;
