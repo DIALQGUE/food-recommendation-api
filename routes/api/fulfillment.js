@@ -234,8 +234,10 @@ router.post('/', function (req, res) {
         });
     }
 
-    else
+    else {
+        recommend.retrieveTag();
         res.sendStatus(200);
+    }
 });
 
 module.exports = router;
