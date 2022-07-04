@@ -1,11 +1,21 @@
 const { Foods, UserHistory } = require('./models/foods-model');
 
-var ingredient, taste, cuisine;
+var ingredient = [], taste = [], cuisine = [];
 
 function retrieveTag() {
-    ingredient = Foods.find().distinct('tag.ingredient').lean();
-    taste = Foods.find().distinct('tag.taste').lean();
-    cuisine = Foods.find().distinct('tag.cuisine').lean();
+
+    Foods.distinct('tag.ingredient').lean().exec(function (err, ingredients) {
+        if (err) throw err;
+        ingredient = ingredients;
+    });
+    Foods.distinct('tag.taste').lean().exec(function (err, tastes) {
+        if (err) throw err;
+        taste = tastes;
+    });
+    Foods.distinct('tag.cuisine').lean().exec(function (err, cuisines) {
+        if (err) throw err;
+        cuisine = cuisines;
+    });
     return;
 }
 
