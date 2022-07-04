@@ -105,6 +105,7 @@ router.post('/', function (req, res) {
     const parameters = req.body.queryResult.parameters;
 
     if (intent === 'Recommend - condition - yes') {
+        let success = false;
         return new Promise((resolve, reject) => {
             Foods.findOne({ 'tag.ingredient': parameters.condition }).lean().exec((err, found) => {
                 if (!found)
@@ -114,6 +115,7 @@ router.post('/', function (req, res) {
                         if (err)
                             reject(err);
                         else {
+                            success = true;
                             resolve(recommend.randomRecommend(selectedFoods));
                         }
                     });
@@ -121,15 +123,21 @@ router.post('/', function (req, res) {
             })
         })
             .then((msg) => {
-                const contextPrefix = getContextPrefix(req.body.queryResult.outputContexts);
                 let newResponse = fulfillmentMessages;
-                newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
-                newResponse.outputContexts = req.body.queryResult.outputContexts;
-                newResponse.outputContexts.push({
-                    name: `${contextPrefix}/response`,
-                    lifespanCount: 2,
-                    parameters: { food: msg }
-                });
+                if (success) {
+                    newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
+
+                    newResponse.outputContexts = req.body.queryResult.outputContexts;
+                    const contextPrefix = getContextPrefix(newResponse.outputContexts);
+                    newResponse.outputContexts.push({
+                        name: `${contextPrefix}/response`,
+                        lifespanCount: 2,
+                        parameters: { food: msg }
+                    });
+                }
+                else
+                    newResponse.fulfillmentMessages[0].text.text[0] = `${msg}`;
+
                 res.send(newResponse);
             })
             .catch(err => {
@@ -156,15 +164,21 @@ router.post('/', function (req, res) {
             });
         })
             .then((msg) => {
-                const contextPrefix = getContextPrefix(req.body.queryResult.outputContexts);
                 let newResponse = fulfillmentMessages;
-                newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
-                newResponse.outputContexts = req.body.queryResult.outputContexts;
-                newResponse.outputContexts.push({
-                    name: `${contextPrefix}/response`,
-                    lifespanCount: 2,
-                    parameters: { food: msg }
-                });
+                if (success) {
+                    newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
+
+                    newResponse.outputContexts = req.body.queryResult.outputContexts;
+                    const contextPrefix = getContextPrefix(newResponse.outputContexts);
+                    newResponse.outputContexts.push({
+                        name: `${contextPrefix}/response`,
+                        lifespanCount: 2,
+                        parameters: { food: msg }
+                    });
+                }
+                else
+                    newResponse.fulfillmentMessages[0].text.text[0] = `${msg}`;
+
                 res.send(newResponse);
             })
             .catch(err => {
