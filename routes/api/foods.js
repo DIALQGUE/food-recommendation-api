@@ -19,6 +19,23 @@ router.get('/history', function (req, res) {
     });
 });
 
+router.get('/tag', async function (req, res, next) {
+    var tagList = [];
+    Foods.find().distinct('tag.ingredient').lean().exec((err, tags) => {
+        if (err) res.status(400).send(err);
+        tagList.push(tags);
+        Foods.find().distinct('tag.taste').lean().exec((err, tags) => {
+            if (err) res.status(400).send(err);
+            tagList.push(tags);
+            Foods.find().distinct('tag.cuisine').lean().exec((err, tags) => {
+                if (err) res.status(400).send(err);
+                tagList.push(tags);
+                res.send(tagList);
+            });
+        });
+    });
+});
+
 router.get('/:name', function (req, res) {
     Foods.find({ name: req.params.name }).lean().exec((err, foods) => {
         if (err) throw err;
