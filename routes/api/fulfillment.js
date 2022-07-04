@@ -107,12 +107,12 @@ router.post('/', function (req, res) {
     if (intent === 'Recommend - condition - yes') {
         let success = false;
         return new Promise((resolve, reject) => {
-            const {type, condition} = recommend.detectCondition(parameters);
+            const { type, condition } = recommend.detectCondition(parameters);
             let query = {};
-            if(type)
+            if (type)
                 query[`tag.${type}`] = { $regex: `.*${condition}.*` };
             else
-                query = { name: { $regex: `.*${condition}.*`} };
+                query = { name: { $regex: `.*${condition}.*` } };
             console.log(query);
             Foods.findOne(query).lean().exec((err, found) => {
                 if (!found)
@@ -161,30 +161,26 @@ router.post('/', function (req, res) {
                     let userHistoryLength = userHistory.length | 0;
                     if (userHistoryLength <= 10)
                         resolve(recommend.randomRecommend(foods));
-                    else if (userHistoryLength <= 50)
+                    //else if (userHistoryLength <= 50)
+                    else
                         resolve(recommend.biasRandomRecommend(foods, userHistory));
                 }
                 catch (err) {
                     reject(err);
-                    res.sendStatus(500);
                 }
             });
         })
             .then((msg) => {
                 let newResponse = fulfillmentMessages;
-                if (success) {
-                    newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
+                newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
 
-                    newResponse.outputContexts = req.body.queryResult.outputContexts;
-                    const contextPrefix = getContextPrefix(newResponse.outputContexts);
-                    newResponse.outputContexts.push({
-                        name: `${contextPrefix}/response`,
-                        lifespanCount: 2,
-                        parameters: { food: msg }
-                    });
-                }
-                else
-                    newResponse.fulfillmentMessages[0].text.text[0] = `${msg}`;
+                newResponse.outputContexts = req.body.queryResult.outputContexts;
+                const contextPrefix = getContextPrefix(newResponse.outputContexts);
+                newResponse.outputContexts.push({
+                    name: `${contextPrefix}/response`,
+                    lifespanCount: 2,
+                    parameters: { food: msg }
+                });
 
                 res.send(newResponse);
             })
