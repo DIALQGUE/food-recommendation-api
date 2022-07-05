@@ -123,7 +123,27 @@ router.post('/', function (req, res) {
                             reject(err);
                         else {
                             success = true;
-                            resolve(recommend.randomRecommend(selectedFoods));
+                            try {
+                                const user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
+                                UserHistory.find({
+                                    user_id: user_id,
+                                    food: { $in: selectedFoods.map(f => f) },
+                                }).populate('food').lean().exec((err, selectedUserHistory) => {
+                                    if (err)
+                                        reject(err);
+
+                                    const selectedUserHistoryLength = selectedUserHistory.length | 0;
+                                    console.log(`user history length: ${selectedUserHistoryLength}`);
+                                    if (selectedUserHistoryLength <= 10)
+                                        resolve(recommend.randomRecommend(selectedFoods));
+                                    //else if (userHistoryLength <= 50)
+                                    else
+                                        resolve(recommend.biasRandomRecommend(selectedFoods, selectedUserHistory));
+                                });
+                            }
+                            catch (err) {
+                                resolve(recommend.randomRecommend(selectedFoods));
+                            }
                         }
                     });
                 }
@@ -156,17 +176,21 @@ router.post('/', function (req, res) {
         return new Promise((resolve, reject) => {
             Foods.find().lean().exec((err, foods) => {
                 try {
-                    let user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
-                    let userHistory = UserHistory.find({ user_id: user_id }).lean();
-                    let userHistoryLength = userHistory.length | 0;
-                    if (userHistoryLength <= 10)
-                        resolve(recommend.randomRecommend(foods));
-                    //else if (userHistoryLength <= 50)
-                    else
-                        resolve(recommend.biasRandomRecommend(foods, userHistory));
+                    const user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
+                    UserHistory.find({ user_id: user_id }).populate('food').lean().exec((err, userHistory) => {
+                        if (err)
+                            reject(err);
+
+                        const userHistoryLength = userHistory.length | 0;
+                        if (userHistoryLength <= 10)
+                            resolve(recommend.randomRecommend(foods));
+                        //else if (userHistoryLength <= 50)
+                        else
+                            resolve(recommend.biasRandomRecommend(foods, userHistory));
+                    });
                 }
                 catch (err) {
-                    reject(err);
+                    resolve(recommend.randomRecommend(foods));
                 }
             });
         })

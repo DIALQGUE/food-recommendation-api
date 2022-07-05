@@ -32,12 +32,14 @@ function detectCondition(parameter) {
 }
 
 function randomRecommend(foods) {
+    console.log("randomRecommend");
     var random = Math.floor(Math.random() * foods.length);
     return foods[random].name;
 }
 
 function biasRandomRecommend(foods, userHistory) {
-    pastFoods = userHistory.populate('food').map(record => record.food);
+    console.log("biasRandomRecommend");
+    pastFoods = userHistory.map(record => record.food);
     biasFoods = foods.concat(pastFoods);
     var random = Math.floor(Math.random() * foods.length);
     return foods[random].name;
