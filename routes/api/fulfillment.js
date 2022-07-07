@@ -219,8 +219,7 @@ router.post('/', function (req, res) {
             user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
         }
         catch (err) {
-            console.log(err);
-            res.sendStatus(500);
+            console.log('no user id available, use testID instead');
         }
         const lastSuggestion = req.body.queryResult.outputContexts.find(context => context.name.includes('/response')).parameters.food;
         console.log(`last suggestion: ${lastSuggestion}`);
@@ -244,7 +243,7 @@ router.post('/', function (req, res) {
                                 console.log(err);
                             else {
                                 console.log(`user history saved: ${saved}`);
-                                res.send(saved);
+                                res.sendStatus(200);
                             }
                         });
                     }
