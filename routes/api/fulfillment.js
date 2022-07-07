@@ -104,7 +104,7 @@ router.post('/', function (req, res) {
     const intent = req.body.queryResult.intent.displayName;
     const parameters = req.body.queryResult.parameters;
 
-    if (intent === 'Recommend - condition - yes') {
+    if (intent === 'Recommend - condition') {
         let success = false;
         return new Promise((resolve, reject) => {
             const { type, condition } = recommend.detectCondition(parameters);
@@ -133,7 +133,6 @@ router.post('/', function (req, res) {
                                         reject(err);
 
                                     const selectedUserHistoryLength = selectedUserHistory.length | 0;
-                                    console.log(`user history length: ${selectedUserHistoryLength}`);
                                     if (selectedUserHistoryLength <= 10)
                                         resolve(recommend.randomRecommend(selectedFoods));
                                     //else if (userHistoryLength <= 50)
