@@ -73,10 +73,10 @@ router.post('/', function (req, res) {
             })
         })
             .then((msg) => {
-                let newResponse = new fulfillmentResponse;
+                var newResponse = fulfillmentResponse;
                 if (success) {
                     newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
-                    newResponse.fulfillmentMessages.push({
+                    newResponse.fulfillmentMessages[1] = {
                         payload: {
                             line: {
                                 type: "template",
@@ -99,7 +99,7 @@ router.post('/', function (req, res) {
                                 }
                             }
                         }
-                    });
+                    }
 
                     newResponse.outputContexts = req.body.queryResult.outputContexts;
                     const contextPrefix = getContextPrefix(newResponse.outputContexts);
@@ -142,32 +142,32 @@ router.post('/', function (req, res) {
             });
         })
             .then((msg) => {
-                let newResponse = new fulfillmentResponse;
+                var newResponse = fulfillmentResponse;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
-                    newResponse.fulfillmentMessages.push({
-                        payload: {
-                            line: {
-                                type: "template",
-                                altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
-                                template: {
-                                    type: "confirm",
-                                    text: `เราขอแนะนำเมนู ${msg}`,
-                                    actions: [
-                                        {
-                                            "type": "message",
-                                            "label": "ถูกใจ",
-                                            "text": "ถูกใจ"
-                                        },
-                                        {
-                                            "type": "message",
-                                            "label": "ไม่ถูกใจ",
-                                            "text": "ไม่ถูกใจ"
-                                        }
-                                    ]
-                                }
+                newResponse.fulfillmentMessages[1] = {
+                    payload: {
+                        line: {
+                            type: "template",
+                            altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
+                            template: {
+                                type: "confirm",
+                                text: `เราขอแนะนำเมนู ${msg}`,
+                                actions: [
+                                    {
+                                        "type": "message",
+                                        "label": "ถูกใจ",
+                                        "text": "ถูกใจ"
+                                    },
+                                    {
+                                        "type": "message",
+                                        "label": "ไม่ถูกใจ",
+                                        "text": "ไม่ถูกใจ"
+                                    }
+                                ]
                             }
                         }
-                    });
+                    }
+                }
 
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 const contextPrefix = getContextPrefix(newResponse.outputContexts);
