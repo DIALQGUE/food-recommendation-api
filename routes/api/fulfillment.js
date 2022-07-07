@@ -73,7 +73,7 @@ router.post('/', function (req, res) {
             })
         })
             .then((msg) => {
-                let newResponse = fulfillmentResponse;
+                let newResponse = new fulfillmentResponse;
                 if (success) {
                     newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
                     newResponse.fulfillmentMessages.push({
@@ -142,30 +142,32 @@ router.post('/', function (req, res) {
             });
         })
             .then((msg) => {
-                let newResponse = fulfillmentResponse;
+                let newResponse = new fulfillmentResponse;
                 newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
-                newResponse.fulfillmentMessages.push({
-                    line: {
-                        type: "template",
-                        altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
-                        template: {
-                            type: "confirm",
-                            text: `เราขอแนะนำเมนู ${msg}`,
-                            actions: [
-                                {
-                                    "type": "message",
-                                    "label": "ถูกใจ",
-                                    "text": "ถูกใจ"
-                                },
-                                {
-                                    "type": "message",
-                                    "label": "ไม่ถูกใจ",
-                                    "text": "ไม่ถูกใจ"
+                    newResponse.fulfillmentMessages.push({
+                        payload: {
+                            line: {
+                                type: "template",
+                                altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
+                                template: {
+                                    type: "confirm",
+                                    text: `เราขอแนะนำเมนู ${msg}`,
+                                    actions: [
+                                        {
+                                            "type": "message",
+                                            "label": "ถูกใจ",
+                                            "text": "ถูกใจ"
+                                        },
+                                        {
+                                            "type": "message",
+                                            "label": "ไม่ถูกใจ",
+                                            "text": "ไม่ถูกใจ"
+                                        }
+                                    ]
                                 }
-                            ]
+                            }
                         }
-                    }
-                });
+                    });
 
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 const contextPrefix = getContextPrefix(newResponse.outputContexts);
