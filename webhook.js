@@ -1,8 +1,8 @@
 const express = require('express');
-// const exphbs = require('express-handlebars');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
+const favicon = require('serve-favicon');
 
 const logger = require('./middleware/logger');
 const foodsRouter = require('./routes/api/foods');
@@ -16,6 +16,7 @@ app.use(morgan('dev'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger);
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 app.use('/api/foods', foodsRouter);
 app.use('/api/fulfillment', fulfillmentRouter);
