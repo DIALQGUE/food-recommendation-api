@@ -11,13 +11,7 @@ function getContextPrefix(outputContexts) {
 }
 
 const fulfillmentResponse = {
-    "fulfillmentMessages": [
-        {
-            "text": {
-                "text": []
-            }
-        }
-    ],
+    "fulfillmentMessages": [],
     "outputContexts": []
 }
 
@@ -75,15 +69,14 @@ router.post('/', function (req, res) {
             .then((msg) => {
                 var newResponse = fulfillmentResponse;
                 if (success) {
-                    newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
-                    newResponse.fulfillmentMessages[1] = {
+                    newResponse.fulfillmentMessages[0] = {
                         payload: {
                             line: {
                                 type: "template",
                                 altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
                                 template: {
                                     type: "confirm",
-                                    text: `เราขอแนะนำเมนู ${msg}`,
+                                    text: `เราขอแนะนำเมนู\n${msg}`,
                                     actions: [
                                         {
                                             "type": "message",
@@ -143,15 +136,14 @@ router.post('/', function (req, res) {
         })
             .then((msg) => {
                 var newResponse = fulfillmentResponse;
-                newResponse.fulfillmentMessages[0].text.text[0] = `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`;
-                newResponse.fulfillmentMessages[1] = {
+                newResponse.fulfillmentMessages[0] = {
                     payload: {
                         line: {
                             type: "template",
                             altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
                             template: {
                                 type: "confirm",
-                                text: `เราขอแนะนำเมนู ${msg}`,
+                                text: `เราขอแนะนำเมนู\n${msg}`,
                                 actions: [
                                     {
                                         "type": "message",
