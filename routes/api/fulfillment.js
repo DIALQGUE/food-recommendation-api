@@ -79,25 +79,25 @@ router.post('/', function (req, res) {
                     newResponse.fulfillmentMessages.push({
                         payload: {
                             line: {
-                                type: "template",
-                                altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
-                                template: {
-                                    type: "confirm",
-                                    text: `เราขอแนะนำเมนู ${msg}`,
-                                    actions: [
-                                        {
-                                            "type": "message",
-                                            "label": "ถูกใจ",
-                                            "text": "ถูกใจ"
-                                        },
-                                        {
-                                            "type": "message",
-                                            "label": "ไม่ถูกใจ",
-                                            "text": "ไม่ถูกใจ"
-                                        }
-                                    ]
+                                "type": "template",
+                                "altText": "this is a confirm template",
+                                "template": {
+                                  "type": "confirm",
+                                  "text": "Are you sure?",
+                                  "actions": [
+                                    {
+                                      "type": "message",
+                                      "label": "Yes",
+                                      "text": "yes"
+                                    },
+                                    {
+                                      "type": "message",
+                                      "label": "No",
+                                      "text": "no"
+                                    }
+                                  ]
                                 }
-                            }
+                              }
                         }
                     });
 
