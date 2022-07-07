@@ -103,8 +103,11 @@ router.post('/', function (req, res) {
                     });
                 }
                 else
-                    newResponse.fulfillmentMessages[0].text.text[0] = `${msg}`;
-
+                    newResponse.fulfillmentMessages[0] = {
+                        text: {
+                            text: [msg]
+                        }
+                    }
                 res.send(newResponse);
             })
             .catch(err => {
