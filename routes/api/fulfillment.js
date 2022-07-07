@@ -24,6 +24,7 @@ router.post('/', function (req, res) {
         let success = false;
         return new Promise((resolve, reject) => {
             const condition = parameters.condition;
+            console.log(`recommending for condition: ${condition}`);
             let query = {
                 $or: [
                     { name: { $regex: `.*${condition}.*` } },
