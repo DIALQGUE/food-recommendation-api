@@ -19,18 +19,6 @@ function retrieveTag() {
     return;
 }
 
-function detectCondition(parameter) {
-    const condition = parameter.condition;
-    if (ingredient.includes(condition))
-        return { "type": "ingredient", "condition": condition };
-    if (cuisine.includes(condition))
-        return { "type": "cuisine", "condition": condition };
-    if (taste.includes(condition))
-        return { "type": "taste", "condition": condition };
-    else
-        return { "type": "", "condition": condition };
-}
-
 function randomRecommend(foods) {
     console.log("randomRecommend");
     var random = Math.floor(Math.random() * foods.length);
@@ -48,6 +36,5 @@ function biasRandomRecommend(foods, userHistory) {
 module.exports = {
     randomRecommend,
     biasRandomRecommend,
-    detectCondition,
     retrieveTag
 };

@@ -107,13 +107,15 @@ router.post('/', function (req, res) {
     if (intent === 'Recommend - condition') {
         let success = false;
         return new Promise((resolve, reject) => {
-            const { type, condition } = recommend.detectCondition(parameters);
-            let query = {};
-            if (type)
-                query[`tag.${type}`] = { $regex: `.*${condition}.*` };
-            else
-                query = { name: { $regex: `.*${condition}.*` } };
-            console.log(query);
+            const condition = parameters.condition;
+            let query = {
+                $or: [
+                    { name: { $regex: `.*${condition}.*` } },
+                    { 'tag.ingredient': { $regex: `.*${condition}.*` } },
+                    { 'tag.taste': { $regex: `.*${condition}.*` } },
+                    { 'tag.cuisine': { $regex: `.*${condition}.*` } }
+                ]
+            };
             Foods.findOne(query).lean().exec((err, found) => {
                 if (!found)
                     resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ\nกรุณาพิมพ์ ขอเลือกใหม่ เพื่อระบุเงื่อนไขอีกครั้ง');
