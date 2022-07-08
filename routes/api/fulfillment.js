@@ -28,9 +28,9 @@ router.post('/', function (req, res) {
             let query = {
                 $or: [
                     { name: { $regex: `.*${condition}.*` } },
-                    { 'tag.ingredient': { $regex: `.*${condition}.*` } },
-                    { 'tag.taste': { $regex: `.*${condition}.*` } },
-                    { 'tag.cuisine': { $regex: `.*${condition}.*` } }
+                    { 'tag.ingredient': { $regex: `${condition}` } },
+                    { 'tag.taste': { $regex: `${condition}` } },
+                    { 'tag.cuisine': { $regex: `${condition}` } }
                 ]
             };
             Foods.findOne(query).lean().exec((err, found) => {
