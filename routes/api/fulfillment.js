@@ -245,10 +245,11 @@ router.post('/', function (req, res) {
     else if (intent === 'Recommend') {
         recommend.retrieveTag();
         let newResponse = fulfillmentResponse;
-        newResponse.fulfillmentMessages = [];
-        newResponse.fulfillmentMessages.push({
+        newResponse.fulfillmentMessages[0] = {
             payload: {
                 line: {
+                    type: "text",
+                    text: "อยากกินอะไรเป็นพิเศษหรือเปล่า บอกเรามาเลย",
                     quickReply: {
                         items: [{
                             type: "action",
@@ -261,35 +262,35 @@ router.post('/', function (req, res) {
                     }
                 }
             }
-        });
+        }
 
         return new Promise((resolve, reject) => {
             resolve(recommend.latestTag());
         }).then(([firstTag, secondTag, thirdTag]) => {
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items.push({
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[0] = {
                 type: "action",
                 action: {
                     type: "message",
                     label: "แนะนำ1",
                     text: `อยากกิน${firstTag}`
                 }
-            });
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items.push({
+            }
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[1] = {
                 type: "action",
                 action: {
                     type: "message",
                     label: "แนะนำ2",
                     text: `อยากกิน${secondTag}`
                 }
-            });
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items.push({
+            }
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[2] = {
                 type: "action",
                 action: {
                     type: "message",
                     label: "แนะนำ3",
                     text: `อยากกิน${thirdTag}`
                 }
-            });
+            }
             res.send(newResponse);
         });
     }
