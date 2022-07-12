@@ -68,9 +68,10 @@ router.post('/', function (req, res) {
             })
         })
             .then((msg) => {
-                var newResponse = fulfillmentResponse;
+                let newResponse = fulfillmentResponse;
+                newResponse.fulfillmentMessages = [];
                 if (success) {
-                    newResponse.fulfillmentMessages[0] = {
+                    newResponse.fulfillmentMessages.push({
                         payload: {
                             line: {
                                 type: "template",
@@ -93,7 +94,7 @@ router.post('/', function (req, res) {
                                 }
                             }
                         }
-                    }
+                    });
 
                     newResponse.outputContexts = req.body.queryResult.outputContexts;
                     const contextPrefix = getContextPrefix(newResponse.outputContexts);
@@ -103,12 +104,29 @@ router.post('/', function (req, res) {
                         parameters: { food: msg }
                     });
                 }
-                else
-                    newResponse.fulfillmentMessages[0] = {
+                else {
+                    newResponse.fulfillmentMessages.push({
                         text: {
                             text: [msg]
                         }
-                    }
+                    })
+                    newResponse.fulfillmentMessages.push({
+                        payload: {
+                            line: {
+                                quickReply: {
+                                    items: [{
+                                        type: "action",
+                                        action: {
+                                            type: "message",
+                                            label: "ขอเลือกใหม่",
+                                            text: "ขอเลือกใหม่"
+                                        }
+                                    }]
+                                }
+                            }
+                        }
+                    });
+                }
                 res.send(newResponse);
             })
             .catch(err => {
@@ -224,8 +242,82 @@ router.post('/', function (req, res) {
         });
     }
 
-    else {
+    else if (intent === 'Recommend') {
         recommend.retrieveTag();
+        let newResponse = fulfillmentResponse;
+        newResponse.fulfillmentMessages = [];
+        newResponse.fulfillmentMessages.push({
+            payload: {
+                line: {
+                    quickReply: {
+                        items: [{
+                            type: "action",
+                            action: {
+                                type: "message",
+                                label: "อะไรก็ได้",
+                                text: "อะไรก็ได้"
+                            }
+                        }]
+                    }
+                }
+            }
+        });
+
+        return new Promise((resolve, reject) => {
+            resolve(recommend.latestTag());
+        }).then(([firstTag, secondTag, thirdTag]) => {
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items.push({
+                type: "action",
+                action: {
+                    type: "message",
+                    label: "แนะนำ1",
+                    text: `อยากกิน${firstTag}`
+                }
+            });
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items.push({
+                type: "action",
+                action: {
+                    type: "message",
+                    label: "แนะนำ2",
+                    text: `อยากกิน${secondTag}`
+                }
+            });
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items.push({
+                type: "action",
+                action: {
+                    type: "message",
+                    label: "แนะนำ3",
+                    text: `อยากกิน${thirdTag}`
+                }
+            });
+            res.send(newResponse);
+        });
+    }
+
+
+    else if (intent === 'Default Welcome Intent' || intent === 'Default Fallback Intent') {
+        let newResponse = fulfillmentResponse;
+        newResponse.fulfillmentMessages = [];
+        newResponse.fulfillmentMessages.push({
+            payload: {
+                line: {
+                    quickReply: {
+                        items: [{
+                            type: "action",
+                            action: {
+                                type: "message",
+                                label: "วันนี้กินอะไรดี",
+                                text: "วันนี้กินอะไรดี"
+                            }
+                        }]
+                    }
+                }
+            }
+        });
+        res.send(newResponse);
+    }
+
+    else {
         res.sendStatus(200);
     }
 });
