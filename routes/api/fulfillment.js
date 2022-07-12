@@ -271,7 +271,7 @@ router.post('/', function (req, res) {
                 type: "action",
                 action: {
                     type: "message",
-                    label: "แนะนำ1",
+                    label: `อยากกิน${firstTag}`,
                     text: `อยากกิน${firstTag}`
                 }
             }
@@ -279,7 +279,7 @@ router.post('/', function (req, res) {
                 type: "action",
                 action: {
                     type: "message",
-                    label: "แนะนำ2",
+                    label: `อยากกิน${secondTag}`,
                     text: `อยากกิน${secondTag}`
                 }
             }
@@ -287,7 +287,7 @@ router.post('/', function (req, res) {
                 type: "action",
                 action: {
                     type: "message",
-                    label: "แนะนำ3",
+                    label: `อยากกิน${thirdTag}`,
                     text: `อยากกิน${thirdTag}`
                 }
             }
@@ -296,12 +296,38 @@ router.post('/', function (req, res) {
     }
 
 
-    else if (intent === 'Default Welcome Intent' || intent === 'Default Fallback Intent') {
+    else if (intent === 'Default Welcome Intent') {
         let newResponse = fulfillmentResponse;
         newResponse.fulfillmentMessages = [];
         newResponse.fulfillmentMessages.push({
             payload: {
                 line: {
+                    type: "text",
+                    text: "สวัสดีนะ หิวแล้วรึยัง",
+                    quickReply: {
+                        items: [{
+                            type: "action",
+                            action: {
+                                type: "message",
+                                label: "วันนี้กินอะไรดี",
+                                text: "วันนี้กินอะไรดี"
+                            }
+                        }]
+                    }
+                }
+            }
+        });
+        res.send(newResponse);
+    }
+
+    else if (intent === 'Default Fallback Intent') {
+        let newResponse = fulfillmentResponse;
+        newResponse.fulfillmentMessages = [];
+        newResponse.fulfillmentMessages.push({
+            payload: {
+                line: {
+                    type: "text",
+                    text: "ขออภัย เราไม่เข้าใจคุณ กรุณาพิมพ์ว่า วันนี้กินอะไรดี เพื่อเริ่มการสนทนาใหม่อีกครั้ง",
                     quickReply: {
                         items: [{
                             type: "action",
