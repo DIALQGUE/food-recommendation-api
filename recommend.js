@@ -21,24 +21,25 @@ function retrieveTag() {
 
 async function latestTag() {
     console.log("latestTag");
-    var latest = await UserHistory.find({}).populate('food').sort({ date: -1 }).limit(50);
-    let tagCount = new Map();
-    latest.forEach(record => {
-        record = record.food;
-        if (record.tag.ingredient) {
-            record.tag.ingredient.forEach(ingredient => {
-                if (tagCount.has(ingredient)) {
-                    tagCount.set(ingredient, tagCount.get(ingredient) + 1);
-                }
-                else {
-                    tagCount.set(ingredient, 1);
-                }
-            }
-            )
-        }
-    });
-    sortedTagCount = new Map([...tagCount].sort((a, b) => b[1] - a[1]));
-    [firstTag, secondTag, thirdTag] = sortedTagCount.keys();
+    // var latest = await UserHistory.find({}).populate('food').sort({ date: -1 }).limit(50);
+    // let tagCount = new Map();
+    // latest.forEach(record => {
+    //     record = record.food;
+    //     if (record.tag.ingredient) {
+    //         record.tag.ingredient.forEach(ingredient => {
+    //             if (tagCount.has(ingredient)) {
+    //                 tagCount.set(ingredient, tagCount.get(ingredient) + 1);
+    //             }
+    //             else {
+    //                 tagCount.set(ingredient, 1);
+    //             }
+    //         }
+    //         )
+    //     }
+    // });
+    // sortedTagCount = new Map([...tagCount].sort((a, b) => b[1] - a[1]));
+    // [firstTag, secondTag, thirdTag] = sortedTagCount.keys();
+    [firstTag, secondTag, thirdTag] = ['หมู', 'ผัก', 'กระเพรา'];
     console.log(firstTag, secondTag, thirdTag);
     return [firstTag, secondTag, thirdTag];
 }
