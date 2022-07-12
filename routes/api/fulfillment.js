@@ -68,8 +68,7 @@ router.post('/', function (req, res) {
             })
         })
             .then((msg) => {
-                let newResponse = fulfillmentResponse;
-                newResponse.fulfillmentMessages = [];
+                let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
                 if (success) {
                     newResponse.fulfillmentMessages.push({
                         payload: {
@@ -157,7 +156,7 @@ router.post('/', function (req, res) {
             });
         })
             .then((msg) => {
-                var newResponse = fulfillmentResponse;
+                let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
                 newResponse.fulfillmentMessages[0] = {
                     payload: {
                         line: {
@@ -244,7 +243,7 @@ router.post('/', function (req, res) {
 
     else if (intent === 'Recommend') {
         recommend.retrieveTag();
-        let newResponse = fulfillmentResponse;
+        let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
         newResponse.fulfillmentMessages[0] = {
             payload: {
                 line: {
@@ -297,9 +296,8 @@ router.post('/', function (req, res) {
 
 
     else if (intent === 'Default Welcome Intent') {
-        let newResponse = fulfillmentResponse;
-        newResponse.fulfillmentMessages = [];
-        newResponse.fulfillmentMessages.push({
+        let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
+        newResponse.fulfillmentMessages[0] = {
             payload: {
                 line: {
                     type: "text",
@@ -316,12 +314,12 @@ router.post('/', function (req, res) {
                     }
                 }
             }
-        });
+        }
         res.send(newResponse);
     }
 
     else if (intent === 'Default Fallback Intent') {
-        let newResponse = fulfillmentResponse;
+        let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
         newResponse.fulfillmentMessages = [];
         newResponse.fulfillmentMessages.push({
             payload: {
