@@ -267,7 +267,7 @@ router.post('/', function (req, res) {
         return new Promise((resolve, reject) => {
             resolve(recommend.latestTag());
         }).then(([firstTag, secondTag, thirdTag]) => {
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[0] = {
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[1] = {
                 type: "action",
                 action: {
                     type: "message",
@@ -275,7 +275,7 @@ router.post('/', function (req, res) {
                     text: `อยากกิน${firstTag}`
                 }
             }
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[1] = {
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[2] = {
                 type: "action",
                 action: {
                     type: "message",
@@ -283,7 +283,7 @@ router.post('/', function (req, res) {
                     text: `อยากกิน${secondTag}`
                 }
             }
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[2] = {
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[3] = {
                 type: "action",
                 action: {
                     type: "message",
