@@ -104,14 +104,11 @@ router.post('/', function (req, res) {
                     });
                 }
                 else {
-                    newResponse.fulfillmentMessages.push({
-                        text: {
-                            text: [msg]
-                        }
-                    })
-                    newResponse.fulfillmentMessages.push({
+                    newResponse.fulfillmentMessages[0] = {
                         payload: {
                             line: {
+                                type: "text",
+                                text: `${msg}`,
                                 quickReply: {
                                     items: [{
                                         type: "action",
@@ -124,7 +121,7 @@ router.post('/', function (req, res) {
                                 }
                             }
                         }
-                    });
+                    }
                 }
                 res.send(newResponse);
             })
