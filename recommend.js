@@ -39,7 +39,7 @@ async function latestTag() {
     // });
     // sortedTagCount = new Map([...tagCount].sort((a, b) => b[1] - a[1]));
     // [firstTag, secondTag, thirdTag] = sortedTagCount.keys();
-    [firstTag, secondTag, thirdTag] = ['หมู', 'ผัก', 'กระเพรา'];
+    [firstTag, secondTag, thirdTag] = ['หมู', 'อาหารญี่ปุ่น', 'ของหวาน'];
     console.log(firstTag, secondTag, thirdTag);
     return [firstTag, secondTag, thirdTag];
 }
