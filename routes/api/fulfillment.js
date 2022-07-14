@@ -20,7 +20,60 @@ router.post('/', function (req, res) {
     const intent = req.body.queryResult.intent.displayName;
     const parameters = req.body.queryResult.parameters;
 
-    if (intent === 'Recommend - condition') {
+    if (intent === 'Recommend' || intent === 'Recommend - unaccepted - yes') {
+        recommend.retrieveTag();
+        let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
+        newResponse.fulfillmentMessages[0] = {
+            payload: {
+                line: {
+                    type: "text",
+                    text: "อยากกินอะไรเป็นพิเศษหรือเปล่า บอกเรามาเลย",
+                    quickReply: {
+                        items: [{
+                            type: "action",
+                            action: {
+                                type: "message",
+                                label: "อะไรก็ได้",
+                                text: "อะไรก็ได้"
+                            }
+                        }]
+                    }
+                }
+            }
+        }
+
+        return new Promise((resolve, reject) => {
+            resolve(recommend.latestTag());
+        }).then(([firstTag, secondTag, thirdTag]) => {
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[1] = {
+                type: "action",
+                action: {
+                    type: "message",
+                    label: `อยากกิน${firstTag}`,
+                    text: `อยากกิน${firstTag}`
+                }
+            }
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[2] = {
+                type: "action",
+                action: {
+                    type: "message",
+                    label: `อยากกิน${secondTag}`,
+                    text: `อยากกิน${secondTag}`
+                }
+            }
+            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[3] = {
+                type: "action",
+                action: {
+                    type: "message",
+                    label: `อยากกิน${thirdTag}`,
+                    text: `อยากกิน${thirdTag}`
+                }
+            }
+            res.send(newResponse);
+        });
+    }
+
+    else if (intent === 'Recommend - condition') {
         let success = false;
         return new Promise((resolve, reject) => {
             const condition = parameters.condition;
@@ -28,14 +81,14 @@ router.post('/', function (req, res) {
             let query = {
                 $or: [
                     { name: { $regex: `.*${condition}.*` } },
-                    { 'tag.ingredient': `${condition}`},
+                    { 'tag.ingredient': `${condition}` },
                     { 'tag.taste': `${condition}` },
                     { 'tag.cuisine': `${condition}` }
                 ]
             };
             Foods.findOne(query).lean().exec((err, found) => {
                 if (!found)
-                    resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ\nกรุณาพิมพ์ ขอเลือกใหม่ เพื่อระบุเงื่อนไขอีกครั้ง');
+                    resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ\nกรุณาพิมพ์ ไม่ยอมรับ เพื่อระบุเงื่อนไขอีกครั้ง');
                 else {
                     Foods.find(query).lean().exec((err, selectedFoods) => {
                         if (err)
@@ -238,59 +291,34 @@ router.post('/', function (req, res) {
         });
     }
 
-    else if (intent === 'Recommend') {
-        recommend.retrieveTag();
+    else if (intent === 'Recommend - unaccepted') {
         let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
-        newResponse.fulfillmentMessages[0] = {
+        newResponse.fulfillmentMessages.push({
             payload: {
                 line: {
-                    type: "text",
-                    text: "อยากกินอะไรเป็นพิเศษหรือเปล่า บอกเรามาเลย",
-                    quickReply: {
-                        items: [{
-                            type: "action",
-                            action: {
+                    type: "template",
+                    altText: "โอเค คุณยังอยากให้เราแนะนำเมนูต่อไปให้อีกไหม",
+                    template: {
+                        type: "confirm",
+                        text: "คุณยังอยากให้เราแนะนำเมนูต่อไปให้อีกไหม",
+                        action: [
+                            {
                                 type: "message",
-                                label: "อะไรก็ได้",
-                                text: "อะไรก็ได้"
+                                label: "ได้สิ",
+                                text: "ได้สิ"
+                            },
+                            {
+                                type: "message",
+                                text: "พอแล้ว",
+                                label: "พอแล้ว"
                             }
-                        }]
+                        ]
                     }
                 }
             }
-        }
-
-        return new Promise((resolve, reject) => {
-            resolve(recommend.latestTag());
-        }).then(([firstTag, secondTag, thirdTag]) => {
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[1] = {
-                type: "action",
-                action: {
-                    type: "message",
-                    label: `อยากกิน${firstTag}`,
-                    text: `อยากกิน${firstTag}`
-                }
-            }
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[2] = {
-                type: "action",
-                action: {
-                    type: "message",
-                    label: `อยากกิน${secondTag}`,
-                    text: `อยากกิน${secondTag}`
-                }
-            }
-            newResponse.fulfillmentMessages[0].payload.line.quickReply.items[3] = {
-                type: "action",
-                action: {
-                    type: "message",
-                    label: `อยากกิน${thirdTag}`,
-                    text: `อยากกิน${thirdTag}`
-                }
-            }
-            res.send(newResponse);
         });
+        res.send(newResponse);
     }
-
 
     else if (intent === 'Default Welcome Intent') {
         let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
