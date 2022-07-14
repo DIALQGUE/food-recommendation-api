@@ -167,8 +167,8 @@ router.post('/', function (req, res) {
                                         type: "action",
                                         action: {
                                             type: "message",
-                                            label: "ขอเลือกใหม่",
-                                            text: "ขอเลือกใหม่"
+                                            label: "ไม่ยอมรับ",
+                                            text: "ไม่ยอมรับ"
                                         }
                                     }]
                                 }
@@ -289,35 +289,6 @@ router.post('/', function (req, res) {
                 }
             }
         });
-    }
-
-    else if (intent === 'Recommend - unaccepted') {
-        let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
-        newResponse.fulfillmentMessages.push({
-            payload: {
-                line: {
-                    type: "template",
-                    altText: "โอเค คุณยังอยากให้เราแนะนำเมนูต่อไปให้อีกไหม",
-                    template: {
-                        type: "confirm",
-                        text: "คุณยังอยากให้เราแนะนำเมนูต่อไปให้อีกไหม",
-                        actions: [
-                            {
-                                type: "message",
-                                label: "ได้สิ",
-                                text: "ได้สิ"
-                            },
-                            {
-                                type: "message",
-                                text: "พอแล้ว",
-                                label: "พอแล้ว"
-                            }
-                        ]
-                    }
-                }
-            }
-        });
-        res.send(newResponse);
     }
 
     else if (intent === 'Default Welcome Intent') {
