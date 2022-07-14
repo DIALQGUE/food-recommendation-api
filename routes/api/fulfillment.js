@@ -301,7 +301,7 @@ router.post('/', function (req, res) {
                     template: {
                         type: "confirm",
                         text: "คุณยังอยากให้เราแนะนำเมนูต่อไปให้อีกไหม",
-                        action: [
+                        actions: [
                             {
                                 type: "message",
                                 label: "ได้สิ",
