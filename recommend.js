@@ -95,7 +95,7 @@ function imageCarouselResponse(displayList) {
     displayList.forEach(display => {
         let [name, date] = display.split(':');
         response.payload.line.template.columns.push({
-            imageUrl: "https://imgur.com/Vz4BMLc",
+            imageUrl: "https://imgur.com/Vz4BMLc" + ".jpg",
             text: date,
             action: {
                 type: "message",
