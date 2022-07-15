@@ -95,11 +95,11 @@ function imageCarouselResponse(displayList) {
     displayList.forEach(display => {
         let [name, date] = display.split(':');
         response.payload.line.template.columns.push({
-            imageUrl: "https://imgur.com/a/IfEhaVu",
+            imageUrl: "https://imgur.com/Vz4BMLc",
             text: date,
             action: {
                 type: "message",
-                label: "Brown",
+                label: name,
                 text: `อยากกิน${name}`
             }
         });
