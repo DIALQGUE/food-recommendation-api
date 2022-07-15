@@ -86,7 +86,7 @@ function imageCarouselResponse(displayList) {
                 type: "template",
                 altText: "นี่คือประวัติการทานอาหารของคุณ",
                 template: {
-                    type: "image_carousel",
+                    type: "carousel",
                     columns: []
                 }
             }
@@ -95,13 +95,16 @@ function imageCarouselResponse(displayList) {
     displayList.forEach(display => {
         let [name, date] = display.split(':');
         response.payload.line.template.columns.push({
-            imageUrl: "https://imgur.com/Vz4BMLc" + ".jpg",
+            thumbnailImageUrl: "https://imgur.com/Vz4BMLc" + ".jpg",
+            title: name,
             text: date,
-            action: {
-                type: "message",
-                label: name,
-                text: `อยากกิน${name}`
-            }
+            actions: [
+                {
+                  type: "message",
+                  label: "ทานเมนูนี้อีกครั้ง",
+                  data: "อยากกิน" + name
+                }
+            ]
         });
     });
     return response;
