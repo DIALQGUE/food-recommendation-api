@@ -104,14 +104,7 @@ router.post('/', function (req, res) {
                     text += `\n${historyList[i]}`;
                 }
                 let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
-                newResponse.fulfillmentMessages[0] = {
-                    payload: {
-                        line: {
-                            type: "text",
-                            text: `ประวัติการทานอาหาร ${historyLength} ครั้งล่าสุด มีดังนี้ ${text}`
-                        }
-                    }
-                }
+                newResponse.fulfillmentMessages.push(recommend.imageCarouselResponse(historyList));
                 res.send(newResponse);
             })
             .catch((err) => {

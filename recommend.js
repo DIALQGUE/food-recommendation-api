@@ -79,11 +79,40 @@ function beginResponse(text) {
     }
 }
 
+function imageCarouselResponse(displayList) {
+    let response = {
+        payload: {
+            line: {
+                type: "template",
+                altText: "นี่คือประวัติการทานอาหารของคุณ",
+                template: {
+                    type: "image_carousel",
+                    columns: []
+                }
+            }
+        }
+    };
+    displayList.forEach(display => {
+        let [name, date] = display.split(':');
+        response.payload.line.template.columns.push({
+            imageUrl: "https://imgur.com/a/IfEhaVu",
+            text: date,
+            action: {
+                type: "message",
+                label: "Brown",
+                text: `อยากกิน${name}`
+            }
+        });
+    });
+    return response;
+}
+
 
 module.exports = {
     randomRecommend,
     biasRandomRecommend,
     retrieveTag,
     latestTag,
-    beginResponse
+    beginResponse,
+    imageCarouselResponse
 };
