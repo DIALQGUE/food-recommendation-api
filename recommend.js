@@ -87,6 +87,8 @@ function imageCarouselResponse(displayList) {
                 altText: "นี่คือประวัติการทานอาหารของคุณ",
                 template: {
                     type: "carousel",
+                    imageAspectRatio: "square",
+                    imageSize: "cover",
                     columns: []
                 }
             }
@@ -98,11 +100,16 @@ function imageCarouselResponse(displayList) {
             thumbnailImageUrl: "https://imgur.com/Vz4BMLc" + ".jpg",
             title: name,
             text: date,
+            defaultAction: {
+                type: "message",
+                label: name,
+                text: "อยากกิน" + name
+            },
             actions: [
                 {
-                  type: "message",
-                  label: "ทานเมนูนี้อีกครั้ง",
-                  data: "อยากกิน" + name
+                    type: "message",
+                    label: "ทานเมนูนี้อีกครั้ง",
+                    text: "อยากกิน" + name
                 }
             ]
         });
