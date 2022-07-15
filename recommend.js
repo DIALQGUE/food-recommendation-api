@@ -1,6 +1,7 @@
 const { Foods, UserHistory } = require('./models/foods-model');
 
 var ingredient = [], taste = [], cuisine = [];
+var dayText = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
 
 function retrieveTag() {
 
@@ -95,11 +96,11 @@ function imageCarouselResponse(displayList) {
         }
     };
     displayList.forEach(display => {
-        let [name, date] = display.split(':');
+        let [name, day, date] = display.split(':');
         response.payload.line.template.columns.push({
             thumbnailImageUrl: "https://imgur.com/Vz4BMLc" + ".jpg",
             title: name,
-            text: date,
+            text: dayText[day] + " " + date,
             defaultAction: {
                 type: "message",
                 label: name,
