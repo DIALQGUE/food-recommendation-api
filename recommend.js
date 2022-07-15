@@ -58,9 +58,32 @@ function biasRandomRecommend(foods, userHistory) {
     return foods[random].name;
 }
 
+function beginResponse(text) {
+    return {
+        payload: {
+            line: {
+                type: "text",
+                text: text,
+                quickReply: {
+                    items: [{
+                        type: "action",
+                        action: {
+                            type: "message",
+                            label: "วันนี้กินอะไรดี",
+                            text: "วันนี้กินอะไรดี"
+                        }
+                    }]
+                }
+            }
+        }
+    }
+}
+
+
 module.exports = {
     randomRecommend,
     biasRandomRecommend,
     retrieveTag,
-    latestTag
+    latestTag,
+    beginResponse
 };

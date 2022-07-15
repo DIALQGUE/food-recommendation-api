@@ -73,6 +73,54 @@ router.post('/', function (req, res) {
         });
     }
 
+    else if (intent == 'History') {
+        let user_id = 'testID';
+        try {
+            user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
+        }
+        catch (err) {
+            console.log('no user id available, use testID instead');
+        }
+        return new Promise((resolve, reject) => {
+            UserHistory.find({ user_id: user_id }).sort({date: -1}).limit(10)
+                .populate('food').lean().exec((err, history) => {
+                    if (err) {
+                        reject('เกิดความผิดพลาดขึ้นในระบบ กรุณาลองใหม่อีกครั้ง');
+                    }
+                    else {
+                        let historyLength = history.length;
+                        if(historyLength == 0)
+                            reject('คุณยังไม่มีประวัติการทานอาหารในระบบ เริ่มถามเพื่อสร้างประวัติการทานอาหารของคุณ');
+                        let historyList = [];
+                        for (let i = 0; i < historyLength; i++)
+                            historyList.push(`${history[i].food.name}:${history[i].date.toLocaleDateString()}`)
+                        resolve([historyLength, historyList]);
+                    }
+                });
+        })
+            .then(([historyLength, historyList]) => {
+                let text = '';
+                for (let i = 0; i < historyList.length; i++) {
+                    text += `\n${historyList[i]}`;
+                }
+                let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
+                newResponse.fulfillmentMessages[0] = {
+                    payload: {
+                        line: {
+                            type: "text",
+                            text: `ประวัติการทานอาหาร ${historyLength} ครั้งล่าสุด มีดังนี้ ${text}`
+                        }
+                    }
+                }
+                res.send(newResponse);
+            })
+            .catch((err) => {
+                let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
+                newResponse.fulfillmentMessages.push(recommend.beginResponse(err));
+                res.send(newResponse);
+            });
+    }
+
     else if (intent === 'Recommend - condition') {
         let success = false;
         return new Promise((resolve, reject) => {
@@ -188,17 +236,18 @@ router.post('/', function (req, res) {
             Foods.find().lean().exec((err, foods) => {
                 try {
                     const user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
-                    UserHistory.find({ user_id: user_id }).populate('food').lean().exec((err, userHistory) => {
-                        if (err)
-                            reject(err);
+                    UserHistory.find({ user_id: user_id })
+                        .populate('food').lean().exec((err, userHistory) => {
+                            if (err)
+                                reject(err);
 
-                        const userHistoryLength = userHistory.length | 0;
-                        if (userHistoryLength <= 10)
-                            resolve(recommend.randomRecommend(foods));
-                        //else if (userHistoryLength <= 50)
-                        else
-                            resolve(recommend.biasRandomRecommend(foods, userHistory));
-                    });
+                            const userHistoryLength = userHistory.length | 0;
+                            if (userHistoryLength <= 10)
+                                resolve(recommend.randomRecommend(foods));
+                            //else if (userHistoryLength <= 50)
+                            else
+                                resolve(recommend.biasRandomRecommend(foods, userHistory));
+                        });
                 }
                 catch (err) {
                     resolve(recommend.randomRecommend(foods));
@@ -249,7 +298,7 @@ router.post('/', function (req, res) {
     }
 
     else if (intent === 'Recommend - accepted') {
-        var user_id = 'testID';
+        let user_id = 'testID';
         try {
             user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
         }
@@ -293,48 +342,13 @@ router.post('/', function (req, res) {
 
     else if (intent === 'Default Welcome Intent') {
         let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
-        newResponse.fulfillmentMessages[0] = {
-            payload: {
-                line: {
-                    type: "text",
-                    text: "สวัสดีนะ หิวแล้วรึยัง",
-                    quickReply: {
-                        items: [{
-                            type: "action",
-                            action: {
-                                type: "message",
-                                label: "วันนี้กินอะไรดี",
-                                text: "วันนี้กินอะไรดี"
-                            }
-                        }]
-                    }
-                }
-            }
-        }
+        newResponse.fulfillmentMessages.push(recommend.beginResponse('สวัสดีนะ หิวแล้วรึยัง'));
         res.send(newResponse);
     }
 
     else if (intent === 'Default Fallback Intent') {
         let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
-        newResponse.fulfillmentMessages = [];
-        newResponse.fulfillmentMessages.push({
-            payload: {
-                line: {
-                    type: "text",
-                    text: "ขออภัย เราไม่เข้าใจคุณ กรุณาพิมพ์ว่า วันนี้กินอะไรดี เพื่อเริ่มการสนทนาใหม่อีกครั้ง",
-                    quickReply: {
-                        items: [{
-                            type: "action",
-                            action: {
-                                type: "message",
-                                label: "วันนี้กินอะไรดี",
-                                text: "วันนี้กินอะไรดี"
-                            }
-                        }]
-                    }
-                }
-            }
-        });
+        newResponse.fulfillmentMessages.push(recommend.beginResponse('ขออภัย เราไม่เข้าใจคุณ กรุณาพิมพ์ว่า วันนี้กินอะไรดี เพื่อเริ่มการสนทนาใหม่อีกครั้ง'));
         res.send(newResponse);
     }
 
