@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const { Foods, UserHistory } = require('../../models/foods-model');
@@ -82,18 +83,18 @@ router.post('/', function (req, res) {
             console.log('no user id available, use testID instead');
         }
         return new Promise((resolve, reject) => {
-            UserHistory.find({ user_id: user_id }).sort({date: -1}).limit(10)
+            UserHistory.find({ user_id: user_id }).sort({ date: -1 }).limit(10)
                 .populate('food').lean().exec((err, history) => {
                     if (err) {
                         reject('เกิดความผิดพลาดขึ้นในระบบ กรุณาลองใหม่อีกครั้ง');
                     }
                     else {
                         let historyLength = history.length;
-                        if(historyLength == 0)
+                        if (historyLength == 0)
                             reject('คุณยังไม่มีประวัติการทานอาหารในระบบ เริ่มถามเพื่อสร้างประวัติการทานอาหารของคุณ');
                         let historyList = [];
                         for (let i = 0; i < historyLength; i++)
-                            historyList.push(`${history[i].food.name}:${history[i].date.getDay()}:${history[i].date.toLocaleDateString(locales='th-TH')}`);
+                            historyList.push(`${history[i].food.name}:${history[i].date.getDay()}:${history[i].date.toLocaleDateString(locales = 'th-TH')}`);
                         resolve([historyLength, historyList]);
                     }
                 });
@@ -114,10 +115,18 @@ router.post('/', function (req, res) {
         let success = false;
         return new Promise((resolve, reject) => {
             const condition = parameters.condition;
+            let rejected = [];
+            try {
+                rejected = req.body.queryResult.outputContexts.find(context => context.name.includes('/response')).parameters.food
+            }
+            catch (err) {
+                console.log('no response context available');
+            }
+
             console.log(`recommending for condition: ${condition}`);
             let query = {
                 $or: [
-                    { name: { $regex: `.*${condition}.*` } },
+                    { name: { $regex: `.*${condition}.*`, $nin: rejected } },
                     { 'tag.ingredient': `${condition}` },
                     { 'tag.taste': `${condition}` },
                     { 'tag.cuisine': `${condition}` }
@@ -125,7 +134,7 @@ router.post('/', function (req, res) {
             };
             Foods.findOne(query).lean().exec((err, found) => {
                 if (!found)
-                    resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ\nกรุณาพิมพ์ ไม่ยอมรับ เพื่อระบุเงื่อนไขอีกครั้ง');
+                    resolve('ไม่มีอาหารที่มีคุณลักษณะนี้ในระบบ หรือได้ถูกปฏิเสธจากผู้ใช้ทั้งหมดแล้ว\nกรุณาพิมพ์ ไม่ยอมรับ เพื่อระบุเงื่อนไขอีกครั้ง');
                 else {
                     Foods.find(query).lean().exec((err, selectedFoods) => {
                         if (err)
@@ -159,6 +168,7 @@ router.post('/', function (req, res) {
         })
             .then((msg) => {
                 let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
+                newResponse.outputContexts = req.body.queryResult.outputContexts;
                 if (success) {
                     newResponse.fulfillmentMessages.push({
                         payload: {
@@ -184,14 +194,19 @@ router.post('/', function (req, res) {
                             }
                         }
                     });
-
-                    newResponse.outputContexts = req.body.queryResult.outputContexts;
-                    const contextPrefix = getContextPrefix(newResponse.outputContexts);
-                    newResponse.outputContexts.push({
-                        name: `${contextPrefix}/response`,
-                        lifespanCount: 2,
-                        parameters: { food: msg }
-                    });
+                    try {
+                        responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))
+                        responseContext[0].parameters.food.push(msg);
+                    }
+                    catch (err) {
+                        console.log(err);
+                        const contextPrefix = getContextPrefix(newResponse.outputContexts);
+                        newResponse.outputContexts.push({
+                            name: `${contextPrefix}/response`,
+                            lifespanCount: 2,
+                            parameters: { food: [msg] }
+                        });
+                    }
                 }
                 else {
                     newResponse.fulfillmentMessages[0] = {
@@ -222,7 +237,16 @@ router.post('/', function (req, res) {
 
     else if (intent === 'Recommend - no condition') {
         return new Promise((resolve, reject) => {
-            Foods.find().lean().exec((err, foods) => {
+            rejected = [];
+            try {
+                rejected = req.body.queryResult.outputContexts.find(context => context.name.includes('/response')).parameters.food
+            }
+            catch (err) {
+                console.log('no response context available');
+            }
+            Foods.find({ name: { $nin: rejected } }).lean().exec((err, foods) => {
+                if (err || !foods)
+                    resolve('อาหารในระบบได้ถูกปฏิเสธจากผู้ใช้ทั้งหมดแล้ว\nกรุณาพิมพ์ว่า วันนี้กินอะไรดี เพื่อเริ่มการสนทนาใหม่อีกครั้ง');
                 try {
                     const user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
                     UserHistory.find({ user_id: user_id })
@@ -271,18 +295,43 @@ router.post('/', function (req, res) {
                 }
 
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
-                const contextPrefix = getContextPrefix(newResponse.outputContexts);
-                newResponse.outputContexts.push({
-                    name: `${contextPrefix}/response`,
-                    lifespanCount: 2,
-                    parameters: { food: msg }
-                });
+                try {
+                    responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))
+                    responseContext[0].parameters.food.push(msg);
+                }
+                catch (err) {
+                    console.log(err);
+                    const contextPrefix = getContextPrefix(newResponse.outputContexts);
+                    newResponse.outputContexts.push({
+                        name: `${contextPrefix}/response`,
+                        lifespanCount: 2,
+                        parameters: { food: [msg] }
+                    });
+                }
 
                 res.send(newResponse);
             })
             .catch(err => {
-                console.log(err);
-                res.sendStatus(500);
+                let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
+                newResponse.fulfillmentMessages[0] = {
+                    payload: {
+                        line: {
+                            type: "text",
+                            text: `${msg}`,
+                            quickReply: {
+                                items: [{
+                                    type: "action",
+                                    action: {
+                                        type: "message",
+                                        label: "วันนี้กินอะไรดี",
+                                        text: "วันนี้กินอะไรดี"
+                                    }
+                                }]
+                            }
+                        }
+                    }
+                }
+                res.send(newResponse);
             });
     }
 
@@ -294,10 +343,10 @@ router.post('/', function (req, res) {
         catch (err) {
             console.log('no user id available, use testID instead');
         }
-        const lastSuggestion = req.body.queryResult.outputContexts.find(context => context.name.includes('/response')).parameters.food;
+        const lastSuggestion = req.body.queryResult.outputContexts.find(context => context.name.includes('/response')).parameters.food.at(-1);
         console.log(`last suggestion: ${lastSuggestion}`);
         Foods.findOne({ name: lastSuggestion }).exec((err, found) => {
-            if (err) {
+            if (!found) {
                 console.log(err);
                 res.sendStatus(500);
             }
