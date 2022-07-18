@@ -195,9 +195,9 @@ router.post('/', function (req, res) {
                         }
                     });
                     try {
-                        responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))
-                        responseContext[0]['lifespanCount'] = 2;
-                        responseContext[0].parameters.food.push(msg);
+                        responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
+                        responseContext.parameters.food.push(msg);
+                        Object.assign(responseContext, {lifespanCount: 2});
                     }
                     catch (err) {
                         console.log(err);
@@ -297,9 +297,9 @@ router.post('/', function (req, res) {
 
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 try {
-                    responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))
-                    responseContext[0]['lifespanCount'] = 2;
-                    responseContext[0].parameters.food.push(msg);
+                    responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
+                    responseContext.parameters.food.push(msg);
+                    Object.assign(responseContext, {lifespanCount: 2});
                 }
                 catch (err) {
                     console.log(err);
