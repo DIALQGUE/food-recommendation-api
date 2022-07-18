@@ -197,14 +197,14 @@ router.post('/', function (req, res) {
                     try {
                         responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
                         responseContext.parameters.food.push(msg);
-                        Object.assign(responseContext, {lifespanCount: 4});
+                        Object.assign(responseContext, { lifespanCount: 3 });
                     }
                     catch (err) {
                         console.log(err);
                         const contextPrefix = getContextPrefix(newResponse.outputContexts);
                         newResponse.outputContexts.push({
                             name: `${contextPrefix}/response`,
-                            lifespanCount: 2,
+                            lifespanCount: 3,
                             parameters: { food: [msg] }
                         });
                     }
@@ -299,14 +299,14 @@ router.post('/', function (req, res) {
                 try {
                     responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
                     responseContext.parameters.food.push(msg);
-                    Object.assign(responseContext, {lifespanCount: 4});
+                    Object.assign(responseContext, { lifespanCount: 3 });
                 }
                 catch (err) {
                     console.log(err);
                     const contextPrefix = getContextPrefix(newResponse.outputContexts);
                     newResponse.outputContexts.push({
                         name: `${contextPrefix}/response`,
-                        lifespanCount: 2,
+                        lifespanCount: 3,
                         parameters: { food: [msg] }
                     });
                 }
@@ -378,6 +378,7 @@ router.post('/', function (req, res) {
                 }
             }
         });
+        
     }
 
     else if (intent === 'Default Welcome Intent') {
