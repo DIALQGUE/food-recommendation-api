@@ -197,7 +197,7 @@ router.post('/', function (req, res) {
                     try {
                         responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
                         responseContext.parameters.food.push(msg);
-                        Object.assign(responseContext, {lifespanCount: 3});
+                        Object.assign(responseContext, {lifespanCount: 4});
                     }
                     catch (err) {
                         console.log(err);
@@ -299,7 +299,7 @@ router.post('/', function (req, res) {
                 try {
                     responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
                     responseContext.parameters.food.push(msg);
-                    Object.assign(responseContext, {lifespanCount: 3});
+                    Object.assign(responseContext, {lifespanCount: 4});
                 }
                 catch (err) {
                     console.log(err);
