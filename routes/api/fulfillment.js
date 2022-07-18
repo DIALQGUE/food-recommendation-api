@@ -99,10 +99,6 @@ router.post('/', function (req, res) {
                 });
         })
             .then(([historyLength, historyList]) => {
-                let text = '';
-                for (let i = 0; i < historyList.length; i++) {
-                    text += `\n${historyList[i]}`;
-                }
                 let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
                 newResponse.fulfillmentMessages.push(recommend.imageCarouselResponse(historyList));
                 res.send(newResponse);
