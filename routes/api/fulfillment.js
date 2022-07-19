@@ -94,7 +94,7 @@ router.post('/', function (req, res) {
                             reject('คุณยังไม่มีประวัติการทานอาหารในระบบ เริ่มถามเพื่อสร้างประวัติการทานอาหารของคุณ');
                         let historyList = [];
                         for (let i = 0; i < historyLength; i++)
-                            historyList.push(`${history[i].food.name}:${history[i].date.getDay()}:${history[i].date.toLocaleDateString(locales = 'th-TH')}`);
+                            historyList.push(history[i]);
                         resolve([historyLength, historyList]);
                     }
                 });

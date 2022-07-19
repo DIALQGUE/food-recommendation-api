@@ -96,9 +96,12 @@ function imageCarouselResponse(displayList) {
         }
     };
     displayList.forEach(display => {
-        let [name, day, date] = display.split(':');
+        let name = display.food.name;
+        let img = display.food.img;
+        let day = display.date.getDay()
+        let date = display.date.toLocaleDateString(locales = 'th-TH');
         response.payload.line.template.columns.push({
-            thumbnailImageUrl: "https://imgur.com/Vz4BMLc" + ".jpg",
+            thumbnailImageUrl: img + ".jpg",
             title: name,
             text: dayText[day] + " " + date,
             defaultAction: {

@@ -19,7 +19,8 @@ const foodsSchema = new Schema({
     id: Schema.Types.ObjectId,
     name: {type: String, required: true},
     eng_name: {type: String, required: true},
-    tag: tagSchema
+    tag: tagSchema,
+    img: {type: String, required: true, dafault: 'https://imgur.com/Vz4BMLc'}
 }, {collection: 'Foods'});
 
 const userHistorySchema = new Schema({
