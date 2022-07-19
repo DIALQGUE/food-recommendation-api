@@ -91,6 +91,7 @@ function buttonResponse(food) {
                 template: {
                     type: "buttons",
                     thumbnailImageUrl: img + ".jpg",
+                    imageSize: "square",
                     title: name,
                     text: `เราขอแนะนำเมนู\n${name}`,
                     actions: [
