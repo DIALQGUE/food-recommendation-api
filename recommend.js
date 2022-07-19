@@ -93,7 +93,7 @@ function buttonResponse(food) {
                     thumbnailImageUrl: img + ".jpg",
                     imageAspectRatio: "square",
                     title: name,
-                    text: `เราขอแนะนำเมนู\n${name}`,
+                    text: `เราขอแนะนำเมนู${name}\nเมนูนี้ถูกใจคุณรึเปล่า`,
                     actions: [
                         {
                             "type": "message",
