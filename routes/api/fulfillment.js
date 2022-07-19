@@ -166,37 +166,14 @@ router.post('/', function (req, res) {
                 }
             })
         })
-            .then((msg) => {
+            .then((food) => {
                 let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 if (success) {
-                    newResponse.fulfillmentMessages.push({
-                        payload: {
-                            line: {
-                                type: "template",
-                                altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
-                                template: {
-                                    type: "confirm",
-                                    text: `เราขอแนะนำเมนู\n${msg}`,
-                                    actions: [
-                                        {
-                                            "type": "message",
-                                            "label": "ถูกใจ",
-                                            "text": "ถูกใจ"
-                                        },
-                                        {
-                                            "type": "message",
-                                            "label": "ไม่ถูกใจ",
-                                            "text": "ไม่ถูกใจ"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    });
+                    newResponse.fulfillmentMessages.push(recommend.buttonResponse(food));
                     try {
                         responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
-                        responseContext.parameters.food.push(msg);
+                        responseContext.parameters.food.push(food.name);
                         Object.assign(responseContext, { lifespanCount: 3 });
                     }
                     catch (err) {
@@ -205,7 +182,7 @@ router.post('/', function (req, res) {
                         newResponse.outputContexts.push({
                             name: `${contextPrefix}/response`,
                             lifespanCount: 3,
-                            parameters: { food: [msg] }
+                            parameters: { food: [food.name] }
                         });
                     }
                 }
@@ -214,7 +191,7 @@ router.post('/', function (req, res) {
                         payload: {
                             line: {
                                 type: "text",
-                                text: `${msg}`,
+                                text: `${food}`,
                                 quickReply: {
                                     items: [{
                                         type: "action",
@@ -247,7 +224,7 @@ router.post('/', function (req, res) {
             }
             Foods.find({ name: { $nin: rejected } }).lean().exec((err, foods) => {
                 if (err || !foods)
-                    resolve('อาหารในระบบได้ถูกปฏิเสธจากผู้ใช้ทั้งหมดแล้ว\nกรุณาพิมพ์ว่า วันนี้กินอะไรดี เพื่อเริ่มการสนทนาใหม่อีกครั้ง');
+                    reject('อาหารในระบบได้ถูกปฏิเสธจากผู้ใช้ทั้งหมดแล้ว\nกรุณาพิมพ์ว่า วันนี้กินอะไรดี เพื่อเริ่มการสนทนาใหม่อีกครั้ง');
                 try {
                     const user_id = req.body.originalDetectIntentRequest.payload.data.source.userId;
                     UserHistory.find({ user_id: user_id })
@@ -268,37 +245,14 @@ router.post('/', function (req, res) {
                 }
             });
         })
-            .then((msg) => {
+            .then((food) => {
                 let newResponse = JSON.parse(JSON.stringify(fulfillmentResponse));
-                newResponse.fulfillmentMessages[0] = {
-                    payload: {
-                        line: {
-                            type: "template",
-                            altText: `เราขอแนะนำเมนู ${msg}\nเมนูนี้ถูกใจคุณรึเปล่า`,
-                            template: {
-                                type: "confirm",
-                                text: `เราขอแนะนำเมนู\n${msg}`,
-                                actions: [
-                                    {
-                                        "type": "message",
-                                        "label": "ถูกใจ",
-                                        "text": "ถูกใจ"
-                                    },
-                                    {
-                                        "type": "message",
-                                        "label": "ไม่ถูกใจ",
-                                        "text": "ไม่ถูกใจ"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
+                newResponse.fulfillmentMessages.push(recommend.buttonResponse(food));
 
                 newResponse.outputContexts = req.body.queryResult.outputContexts;
                 try {
                     responseContext = newResponse.outputContexts.filter(oc => oc['name'].includes('/response'))[0];
-                    responseContext.parameters.food.push(msg);
+                    responseContext.parameters.food.push(food.name);
                     Object.assign(responseContext, { lifespanCount: 3 });
                 }
                 catch (err) {
@@ -307,7 +261,7 @@ router.post('/', function (req, res) {
                     newResponse.outputContexts.push({
                         name: `${contextPrefix}/response`,
                         lifespanCount: 3,
-                        parameters: { food: [msg] }
+                        parameters: { food: [food.name] }
                     });
                 }
 
@@ -319,7 +273,7 @@ router.post('/', function (req, res) {
                     payload: {
                         line: {
                             type: "text",
-                            text: `${msg}`,
+                            text: `${err}`,
                             quickReply: {
                                 items: [{
                                     type: "action",

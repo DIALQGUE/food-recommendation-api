@@ -48,7 +48,7 @@ async function latestTag() {
 function randomRecommend(foods) {
     console.log("randomRecommend");
     var random = Math.floor(Math.random() * foods.length);
-    return foods[random].name;
+    return foods[random];
 }
 
 function biasRandomRecommend(foods, userHistory) {
@@ -56,7 +56,7 @@ function biasRandomRecommend(foods, userHistory) {
     pastFoods = userHistory.map(record => record.food);
     biasFoods = foods.concat(pastFoods);
     var random = Math.floor(Math.random() * foods.length);
-    return foods[random].name;
+    return foods[random];
 }
 
 function beginResponse(text) {
@@ -78,6 +78,38 @@ function beginResponse(text) {
             }
         }
     }
+}
+
+function buttonResponse(food) {
+    let name = food.name
+    let img = food.img
+    let response = {
+        payload: {
+            line: {
+                type: "template",
+                altText: `เราขอแนะนำเมนู ${name}\nเมนูนี้ถูกใจคุณรึเปล่า`,
+                template: {
+                    type: "button",
+                    thumbnailImageUrl: img + ".jpg",
+                    title: name,
+                    text: `เราขอแนะนำเมนู\n${name}`,
+                    actions: [
+                        {
+                            "type": "message",
+                            "label": "ถูกใจ",
+                            "text": "ถูกใจ"
+                        },
+                        {
+                            "type": "message",
+                            "label": "ไม่ถูกใจ",
+                            "text": "ไม่ถูกใจ"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+    return response;
 }
 
 function imageCarouselResponse(displayList) {
@@ -128,5 +160,6 @@ module.exports = {
     retrieveTag,
     latestTag,
     beginResponse,
+    buttonResponse,
     imageCarouselResponse
 };
