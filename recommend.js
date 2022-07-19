@@ -89,7 +89,7 @@ function buttonResponse(food) {
                 type: "template",
                 altText: `เราขอแนะนำเมนู ${name}\nเมนูนี้ถูกใจคุณรึเปล่า`,
                 template: {
-                    type: "button",
+                    type: "buttons",
                     thumbnailImageUrl: img + ".jpg",
                     title: name,
                     text: `เราขอแนะนำเมนู\n${name}`,
