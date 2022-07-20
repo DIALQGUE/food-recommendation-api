@@ -1,6 +1,5 @@
 const { Foods, UserHistory } = require('./models/foods-model');
 
-var ingredient = [], taste = [], cuisine = [];
 var dayText = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
 
 function retrieveTag() {
@@ -22,7 +21,7 @@ function retrieveTag() {
 
 async function latestTag() {
     console.log("latestTag");
-    // var latest = await UserHistory.find({}).populate('food').sort({ date: -1 }).limit(50);
+    // let latest = await UserHistory.find({}).populate('food').sort({ date: -1 }).limit(50);
     // let tagCount = new Map();
     // latest.forEach(record => {
     //     record = record.food;
@@ -51,12 +50,22 @@ function randomRecommend(foods) {
     return foods[random];
 }
 
+async function popularityRecommend(){
+    let foods = await Foods.find().lean();
+    let length = Math.min(foods.length, UserHistory.countDocuments());
+    let latestOrder = await UserHistory.find().sort({ date: -1 }).limit(length).populate('food').lean();
+    let latestFoods = latestOrder.map(record => record.food);
+    let popularFood = foods.concat(latestFoods);
+    let random = Math.floor(Math.random() * popularFood.length);
+    return popularFood[random];
+}
+
 function biasRandomRecommend(foods, userHistory) {
     console.log("biasRandomRecommend");
-    pastFoods = userHistory.map(record => record.food);
-    biasFoods = foods.concat(pastFoods);
-    var random = Math.floor(Math.random() * foods.length);
-    return foods[random];
+    let pastFoods = userHistory.map(record => record.food);
+    let biasFoods = foods.concat(pastFoods);
+    let random = Math.floor(Math.random() * biasFoods.length);
+    return biasFoods[random];
 }
 
 function beginResponse(text) {
@@ -157,6 +166,7 @@ function imageCarouselResponse(displayList) {
 
 module.exports = {
     randomRecommend,
+    popularityRecommend,
     biasRandomRecommend,
     retrieveTag,
     latestTag,

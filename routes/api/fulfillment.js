@@ -234,7 +234,7 @@ router.post('/', function (req, res) {
 
                             const userHistoryLength = userHistory.length | 0;
                             if (userHistoryLength <= 10)
-                                resolve(recommend.randomRecommend(foods));
+                                resolve(recommend.popularityRecommend());
                             //else if (userHistoryLength <= 50)
                             else
                                 resolve(recommend.biasRandomRecommend(foods, userHistory));
