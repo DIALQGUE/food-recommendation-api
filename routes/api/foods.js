@@ -53,7 +53,8 @@ router.post('/:multiple', function (req, res) {
             let newFood = new Foods({
                 name: food.name,
                 eng_name: food.eng_name,
-                tag: food.tag
+                tag: food.tag,
+                img: food.img
             });
             if (!newFood.name) {
                 return res.status(400).json({ msg: 'Please include a name for every food' });
@@ -67,7 +68,8 @@ router.post('/:multiple', function (req, res) {
         let newFood = new Foods({
             name: food.name,
             eng_name: food.eng_name,
-            tag: food.tag
+            tag: food.tag,
+            img: food.img
         });
         if (!newFood.name) {
             return res.status(400).json({ msg: 'Please include a name' });
